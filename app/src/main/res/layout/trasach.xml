@@ -1,0 +1,58 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:orientation="vertical" android:layout_width="match_parent"
+    android:layout_height="match_parent">
+
+    <ImageButton
+        android:id="@+id/img_Tra_MaSach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:layout_marginTop="62dp"
+        app:srcCompat="@drawable/ic_menu_camera" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/auto_Tra_Masach"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/img_Tra_MaSach"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_toRightOf="@+id/img_Tra_MaSach"
+        android:hint="Mã Sách" />
+
+    <ImageButton
+        android:id="@+id/img_Tra_MaDG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/img_Tra_MaSach"
+        android:layout_marginTop="32dp"
+        app:srcCompat="@drawable/ic_menu_camera" />
+
+    <MultiAutoCompleteTextView
+        android:id="@+id/auto_Tra_MaDG"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/img_Tra_MaDG"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:hint="Mã độc Giả"
+        android:layout_toRightOf="@+id/img_Tra_MaDG"
+        android:layout_toEndOf="@+id/img_Tra_MaDG" />
+
+    <Button
+        android:id="@+id/btn_Tra_Done"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="50dp"
+        android:text="Done"
+        android:layout_below="@+id/auto_Tra_MaDG"
+        android:layout_centerHorizontal="true" />
+
+
+</RelativeLayout>

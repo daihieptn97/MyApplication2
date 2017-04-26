@@ -1,0 +1,12 @@
+<resources>
+    <string name="app_name">Quan Ly Thu Vien</string>
+    <string name="title_activity_main">MainActivity</string>
+
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+
+    <string name="action_settings">Settings</string>
+    <string name="nhap_sach">Nhập sách</string>
+    <string name="nhap_sach_title">Nhập sách</string>
+    <string name="Title_MuonSach">Mượn Sách</string>
+</resources>

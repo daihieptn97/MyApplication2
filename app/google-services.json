@@ -1,0 +1,63 @@
+{
+  "project_info": {
+    "project_number": "46660772564",
+    "firebase_url": "https://quan-ly-thu-vien.firebaseio.com",
+    "project_id": "quan-ly-thu-vien",
+    "storage_bucket": "quan-ly-thu-vien.appspot.com"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:46660772564:android:40cb5489177123a3",
+        "android_client_info": {
+          "package_name": "com.hieptran.quanlythuvien"
+        }
+      },
+      "oauth_client": [
+        {
+          "client_id": "46660772564-nptkbhdjcmulegad7bu3k72eb23p25gs.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hieptran.quanlythuvien",
+            "certificate_hash": "d821746ee54096c30cc824bd8b0982c85f77e8ba"
+          }
+        },
+        {
+          "client_id": "46660772564-1me7tc4o4s92fge050mhu22tj8qciscd.apps.googleusercontent.com",
+          "client_type": 1,
+          "android_info": {
+            "package_name": "com.hieptran.quanlythuvien",
+            "certificate_hash": "6965d1c01cffbf71cf2f7d4614f031385a6a4937"
+          }
+        },
+        {
+          "client_id": "46660772564-bn0vkmkm9u510ehggsspggb30oc6892m.apps.googleusercontent.com",
+          "client_type": 3
+        }
+      ],
+      "api_key": [
+        {
+          "current_key": "AIzaSyDDyuz5E4KUFZXfQwM7CJAjdbw6opBFnl8"
+        }
+      ],
+      "services": {
+        "analytics_service": {
+          "status": 1
+        },
+        "appinvite_service": {
+          "status": 2,
+          "other_platform_oauth_client": [
+            {
+              "client_id": "46660772564-bn0vkmkm9u510ehggsspggb30oc6892m.apps.googleusercontent.com",
+              "client_type": 3
+            }
+          ]
+        },
+        "ads_service": {
+          "status": 2
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}

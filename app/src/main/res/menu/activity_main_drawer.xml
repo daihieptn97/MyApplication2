@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+
+    <group android:checkableBehavior="single">
+        <item
+            android:id="@+id/menu_TongQuan"
+            android:icon="@drawable/tongquan_ic"
+            android:title="Tổng quan" />
+        <item
+            android:id="@+id/menu_ThemSach"
+            android:icon="@drawable/themsachvaokho"
+            android:title="Thêm Sách Vào Kho" />
+        <item
+            android:id="@+id/menu_Muonsach"
+            android:icon="@drawable/muonsach"
+            android:title="Mượn Sách" />
+        <item
+            android:id="@+id/menu_trasach"
+            android:icon="@drawable/trasach"
+            android:title="Trả Sách" />
+
+        <item android:icon="@drawable/themdg_ic"
+            android:id="@+id/menu_taoDgia"
+            android:title="Tạo Tài Khoản Đọc Giả" />
+
+
+        <item
+            android:id="@+id/menu_thongke"
+            android:icon="@drawable/thongke_ic"
+            android:title="Thống Kê" />
+
+
+    </group>
+
+    <item android:title="Communicate">
+        <menu>
+            <item
+                android:id="@+id/nav_share"
+                android:icon="@drawable/share_ic"
+                android:title="Share" />
+            <item
+                android:id="@+id/nav_send"
+                android:icon="@drawable/send_ic"
+                android:title="Send" />
+
+        </menu>
+    </item>
+    <item
+        android:id="@+id/menu_ThongTin"
+        android:icon="@drawable/info"
+        android:title="Thông tin" />
+    <item
+        android:id="@+id/menu_DangXuat"
+        android:icon="@drawable/dangxuat_ic"
+        android:title="Đăng Xuất" />
+
+</menu>

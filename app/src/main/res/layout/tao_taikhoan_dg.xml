@@ -1,0 +1,165 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <ImageButton
+                android:id="@+id/imageButton4"
+                android:layout_width="match_parent"
+                android:layout_height="150dp"
+                android:layout_alignParentEnd="true"
+                android:layout_alignParentLeft="true"
+                android:layout_alignParentRight="true"
+                android:layout_alignParentStart="true"
+                android:layout_alignParentTop="true"
+                app:srcCompat="@mipmap/ic_launcher" />
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <ImageButton
+                    android:id="@+id/imageButton3"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_marginTop="20dp"
+                    app:srcCompat="@drawable/ic_menu_camera" />
+
+                <EditText
+                    android:id="@+id/ed_DG_madocgia"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignBottom="@+id/imageButton3"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginTop="10dp"
+                    android:layout_toRightOf="@+id/imageButton3"
+                    android:ems="10"
+                    android:hint="Mã Độc Giả"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/ed_DG_TenDG"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentEnd="true"
+
+                    android:layout_alignParentRight="true"
+                    android:layout_below="@+id/ed_DG_madocgia"
+                    android:layout_marginTop="10dp"
+                    android:layout_toEndOf="@+id/imageButton3"
+                    android:layout_toRightOf="@+id/imageButton3"
+                    android:ems="10"
+                    android:hint="Tên Độc Giả"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/ed_DG_Diachi"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/ed_DG_TenDG"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/ed_DG_TenDG"
+                    android:layout_below="@+id/ed_DG_TenDG"
+                    android:layout_marginTop="10dp"
+
+                    android:ems="10"
+                    android:hint="Địa chỉ"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/ed_DG_SDT"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/ed_DG_Diachi"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/ed_DG_Diachi"
+                    android:layout_below="@+id/ed_DG_Diachi"
+                    android:layout_marginTop="10dp"
+
+                    android:ems="10"
+                    android:hint="Số Điện Thoại"
+                    android:inputType="number" />
+
+
+                <EditText
+                    android:id="@+id/ed_DG_Lop"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/ed_DG_SDT"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/ed_DG_SDT"
+                    android:layout_below="@+id/ed_DG_SDT"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Lớp"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/ed_DG_tenDangNhap"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/ed_DG_Lop"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/ed_DG_Lop"
+                    android:layout_below="@+id/ed_DG_Lop"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Tên Đăng Nhập"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/ed_DG_MatKhau"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/ed_DG_tenDangNhap"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/ed_DG_tenDangNhap"
+                    android:layout_below="@+id/ed_DG_tenDangNhap"
+                    android:layout_marginTop="10dp"
+
+                    android:ems="10"
+                    android:hint="Mật Khẩu"
+                    android:inputType="textPersonName" />
+
+                <EditText
+                    android:id="@+id/ed_DG_NhapLaiMatKhau"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/ed_DG_MatKhau"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignStart="@+id/ed_DG_MatKhau"
+                    android:layout_below="@+id/ed_DG_MatKhau"
+                    android:layout_marginTop="10dp"
+                    android:ems="10"
+                    android:hint="Nhập Lại Mật Khẩu"
+                    android:inputType="textPersonName" />
+
+
+            </RelativeLayout>
+
+
+        </LinearLayout>
+    </ScrollView>
+</LinearLayout>
