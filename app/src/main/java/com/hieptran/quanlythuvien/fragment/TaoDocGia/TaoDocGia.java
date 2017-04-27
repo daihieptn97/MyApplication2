@@ -47,6 +47,7 @@ public class TaoDocGia extends Fragment {
         View view = inflater.inflate(R.layout.tao_taikhoan_dg, container, false);
         getActivity().setTitle("Tạo Tài Khoản Độc Giả");
         anhXa(view);
+        
 
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
