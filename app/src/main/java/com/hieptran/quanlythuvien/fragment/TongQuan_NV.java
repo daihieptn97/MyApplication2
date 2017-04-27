@@ -23,7 +23,7 @@ public class TongQuan_NV extends Fragment {
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nv_tongquan, container, false);
-
+        getActivity().setTitle("Tổng Quan");
         return view;
 
     }

@@ -14,16 +14,24 @@
             android:layout_height="match_parent"
             android:orientation="vertical">
 
-            <ImageButton
-                android:id="@+id/imageButton4"
+            <LinearLayout
+                android:gravity="center"
                 android:layout_width="match_parent"
-                android:layout_height="150dp"
-                android:layout_alignParentEnd="true"
-                android:layout_alignParentLeft="true"
-                android:layout_alignParentRight="true"
-                android:layout_alignParentStart="true"
-                android:layout_alignParentTop="true"
-                app:srcCompat="@mipmap/ic_launcher" />
+                android:layout_height="155dp">
+
+                <ImageView android:scaleType="centerCrop"
+                    android:id="@+id/imgTaoAvatar"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:layout_alignParentEnd="true"
+                    android:layout_alignParentLeft="true"
+                    android:layout_alignParentRight="true"
+                    android:layout_alignParentStart="true"
+                    android:layout_alignParentTop="true"
+                    android:layout_gravity="center"
+                    app:srcCompat="@mipmap/ic_launcher" />
+
+            </LinearLayout>
 
             <RelativeLayout
                 android:layout_width="match_parent"
@@ -31,7 +39,7 @@
                 android:orientation="vertical">
 
                 <ImageButton
-                    android:id="@+id/imageButton3"
+                    android:id="@+id/imgTaoScanMaDG"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentLeft="true"
@@ -44,11 +52,11 @@
                     android:id="@+id/ed_DG_madocgia"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    android:layout_alignBottom="@+id/imageButton3"
+                    android:layout_alignBottom="@+id/imgTaoScanMaDG"
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_marginTop="10dp"
-                    android:layout_toRightOf="@+id/imageButton3"
+                    android:layout_toRightOf="@+id/imgTaoScanMaDG"
                     android:ems="10"
                     android:hint="Mã Độc Giả"
                     android:inputType="textPersonName" />
@@ -62,8 +70,8 @@
                     android:layout_alignParentRight="true"
                     android:layout_below="@+id/ed_DG_madocgia"
                     android:layout_marginTop="10dp"
-                    android:layout_toEndOf="@+id/imageButton3"
-                    android:layout_toRightOf="@+id/imageButton3"
+                    android:layout_toEndOf="@+id/imgTaoScanMaDG"
+                    android:layout_toRightOf="@+id/imgTaoScanMaDG"
                     android:ems="10"
                     android:hint="Tên Độc Giả"
                     android:inputType="textPersonName" />
@@ -156,7 +164,16 @@
                     android:hint="Nhập Lại Mật Khẩu"
                     android:inputType="textPersonName" />
 
-
+                <Button
+                    android:id="@+id/btnTaoDone"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentBottom="true"
+                    android:layout_below="@+id/ed_DG_NhapLaiMatKhau"
+                    android:layout_centerHorizontal="true"
+                    android:layout_marginTop="10dp"
+                    android:foregroundGravity=""
+                    android:text="Done" />
             </RelativeLayout>
 
 
