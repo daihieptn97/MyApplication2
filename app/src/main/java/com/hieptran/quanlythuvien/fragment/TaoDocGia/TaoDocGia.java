@@ -48,8 +48,6 @@ public class TaoDocGia extends Fragment {
         getActivity().setTitle("Tạo Tài Khoản Độc Giả");
         anhXa(view);
 
-        
-
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -94,7 +92,7 @@ public class TaoDocGia extends Fragment {
             docGia.setTenDangNhap(edTenDangNhap.getText().toString());
             docGia.setMatKhau(edMatKHau.getText().toString());
 
-            mDatabase.child(keyKhoDocGia).push().setValue(docGia); // set value bi l
+            mDatabase.child(keyKhoDocGia).push().setValue(docGia); // set value bi loi, neu co them anh bitmap
 
             edNhapLaiMatKhau.setText("");
             edMatKHau.setText("");
