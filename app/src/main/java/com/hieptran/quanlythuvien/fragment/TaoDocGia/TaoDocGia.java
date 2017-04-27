@@ -81,35 +81,54 @@ public class TaoDocGia extends Fragment {
         return stream.toByteArray();
     }
 
+
     private void doneAndupLoad() {
-        if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
-            DocGia docGia = new DocGia();
-            //docGia.setAvatar(getBytesFromBitmap(bitmapGetData));
-            String imgAvatar = Base64.encodeToString(getBytesFromBitmap(bitmapGetData), Base64.NO_WRAP);
-            docGia.setAvatar(imgAvatar);
-            docGia.setMaDocGia(edMaDG.getText().toString().trim());
-            docGia.setDiaChi(edDiaChi.getText().toString());
-            docGia.setLop(edLop.getText().toString());
-            docGia.setSdt(edSdt.getText().toString());
-            docGia.setTenDG(edTenDG.getText().toString());
-            docGia.setTenDangNhap(edTenDangNhap.getText().toString());
-            docGia.setMatKhau(edMatKHau.getText().toString());
+        if (checkMaKhau() && checkSoDienThoai()) {
+            if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
 
-            mDatabase.child(keyKhoDocGia).push().setValue(docGia); // set value bi loi, neu co them anh bitmap
+                DocGia docGia = new DocGia();
+                //docGia.setAvatar(getBytesFromBitmap(bitmapGetData));
+                String imgAvatar = Base64.encodeToString(getBytesFromBitmap(bitmapGetData), Base64.NO_WRAP);
+                docGia.setAvatar(imgAvatar);
+                docGia.setMaDocGia(edMaDG.getText().toString().trim());
+                docGia.setDiaChi(edDiaChi.getText().toString());
+                docGia.setLop(edLop.getText().toString());
+                docGia.setSdt(edSdt.getText().toString());
+                docGia.setTenDG(edTenDG.getText().toString());
+                docGia.setTenDangNhap(edTenDangNhap.getText().toString());
+                docGia.setMatKhau(edMatKHau.getText().toString());
 
-            edNhapLaiMatKhau.setText("");
-            edMatKHau.setText("");
-            edLop.setText("");
-            edMaDG.setText("");
-            edSdt.setText("");
-            edTenDG.setText("");
-            edDiaChi.setText("");
-            edTenDangNhap.setText("");
-            Toasty.success(getContext(), "Tạo Thành Công", Toast.LENGTH_SHORT).show();
+                mDatabase.child(keyKhoDocGia).push().setValue(docGia); // set value bi loi, neu co them anh bitmap
+
+                edNhapLaiMatKhau.setText("");
+                edMatKHau.setText("");
+                edLop.setText("");
+                edMaDG.setText("");
+                edSdt.setText("");
+                edTenDG.setText("");
+                edDiaChi.setText("");
+                edTenDangNhap.setText("");
+                Toasty.success(getContext(), "Tạo Thành Công", Toast.LENGTH_SHORT).show();
+            } else {
+                edMatKHau.setError("");
+                edNhapLaiMatKhau.setError("");
+                Toasty.warning(getContext(), "Mật khẩu chưa khớp", Toast.LENGTH_SHORT).show();
+            }
+        }
+    }
+
+    private boolean checkSoDienThoai() {
+        if (edSdt.length() >= 10) {
+            return true;
+        } else return false;
+    }
+
+    private boolean checkMaKhau() {
+        if (edMatKHau.length() > 5) {
+            return true;
         } else {
-            edMatKHau.setError("");
-            edNhapLaiMatKhau.setError("");
-            Toasty.warning(getContext(), "Mật khẩu chưa khớp", Toast.LENGTH_SHORT).show();
+            return true;
+
         }
     }
 
