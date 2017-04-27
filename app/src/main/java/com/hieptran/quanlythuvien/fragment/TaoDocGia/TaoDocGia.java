@@ -9,6 +9,7 @@ import android.provider.MediaStore;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
+import android.util.Base64;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -84,6 +85,8 @@ public class TaoDocGia extends Fragment {
         if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
             DocGia docGia = new DocGia();
             //docGia.setAvatar(getBytesFromBitmap(bitmapGetData));
+            String imgAvatar = Base64.encodeToString(getBytesFromBitmap(bitmapGetData), Base64.NO_WRAP);
+            docGia.setAvatar(imgAvatar);
             docGia.setMaDocGia(edMaDG.getText().toString().trim());
             docGia.setDiaChi(edDiaChi.getText().toString());
             docGia.setLop(edLop.getText().toString());
@@ -103,10 +106,10 @@ public class TaoDocGia extends Fragment {
             edDiaChi.setText("");
             edTenDangNhap.setText("");
             Toasty.success(getContext(), "Tạo Thành Công", Toast.LENGTH_SHORT).show();
-        }else {
+        } else {
             edMatKHau.setError("");
             edNhapLaiMatKhau.setError("");
-            Toasty.warning(getContext(),"Mật khẩu chưa khớp" ,Toast.LENGTH_SHORT).show();
+            Toasty.warning(getContext(), "Mật khẩu chưa khớp", Toast.LENGTH_SHORT).show();
         }
     }
 

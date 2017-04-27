@@ -6,8 +6,8 @@ package com.hieptran.quanlythuvien.fragment.TaoDocGia;
 
 public class DocGia {
     private String maDocGia, tenDG, diaChi, Sdt, lop, tenDangNhap, matKhau;
-    private byte[] avatar;
-
+    //private byte[] avatar;
+    private  String avatar;
     public String getMaDocGia() {
         return maDocGia;
     }
@@ -64,11 +64,11 @@ public class DocGia {
         this.matKhau = matKhau;
     }
 
-    public byte[] getAvatar() {
+    public String getAvatar() {
         return avatar;
     }
 
-    public void setAvatar(byte[] avatar) {
+    public void setAvatar(String avatar) {
         this.avatar = avatar;
     }
 
