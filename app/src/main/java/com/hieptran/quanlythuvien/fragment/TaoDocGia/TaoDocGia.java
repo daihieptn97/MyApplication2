@@ -18,8 +18,12 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.Scan;
+
+import java.io.ByteArrayOutputStream;
 
 import es.dmoral.toasty.Toasty;
 
@@ -28,11 +32,14 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class TaoDocGia extends Fragment {
+    private static final String keyKhoDocGia = "KhoDocGia";
     private final int requetCodeAvatar = 0, requetCodeScanMaDG = 1;
+    Bitmap bitmapGetData;
     private ImageButton imgScanMaDG;
     private ImageView imgAvatar;
-    private EditText edMaDG, edTenDG, edDiaChi, edSdt, edLop, edTenDangNhap, edMatKHau;
+    private EditText edMaDG, edTenDG, edDiaChi, edSdt, edLop, edTenDangNhap, edMatKHau, edNhapLaiMatKhau;
     private Button btnDone;
+    private DatabaseReference mDatabase;
 
     @Nullable
     @Override
@@ -56,8 +63,51 @@ public class TaoDocGia extends Fragment {
             }
         });
 
+        btnDone.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                doneAndupLoad();
+            }
+        });
 
         return view;
+    }
+
+    // convert from bitmap to byte array
+    public byte[] getBytesFromBitmap(Bitmap bitmap) {
+        ByteArrayOutputStream stream = new ByteArrayOutputStream();
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        return stream.toByteArray();
+    }
+
+    private void doneAndupLoad() {
+        if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
+            DocGia docGia = new DocGia();
+            //docGia.setAvatar(getBytesFromBitmap(bitmapGetData));
+            docGia.setMaDocGia(edMaDG.getText().toString().trim());
+            docGia.setDiaChi(edDiaChi.getText().toString());
+            docGia.setLop(edLop.getText().toString());
+            docGia.setSdt(edSdt.getText().toString());
+            docGia.setTenDG(edTenDG.getText().toString());
+            docGia.setTenDangNhap(edTenDangNhap.getText().toString());
+            docGia.setMatKhau(edMatKHau.getText().toString());
+
+            mDatabase.child(keyKhoDocGia).push().setValue(docGia); // set value bi l
+
+            edNhapLaiMatKhau.setText("");
+            edMatKHau.setText("");
+            edLop.setText("");
+            edMaDG.setText("");
+            edSdt.setText("");
+            edTenDG.setText("");
+            edDiaChi.setText("");
+            edTenDangNhap.setText("");
+            Toasty.success(getContext(), "Tạo Thành Công", Toast.LENGTH_SHORT).show();
+        }else {
+            edMatKHau.setError("");
+            edNhapLaiMatKhau.setError("");
+            Toasty.warning(getContext(),"Mật khẩu chưa khớp" ,Toast.LENGTH_SHORT).show();
+        }
     }
 
     private void chonAnh() {
@@ -84,8 +134,8 @@ public class TaoDocGia extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == requetCodeAvatar && resultCode == Activity.RESULT_OK && data != null) {
-            Bitmap bitmap = (Bitmap) data.getExtras().get("data");
-            imgAvatar.setImageBitmap(bitmap);
+            bitmapGetData = (Bitmap) data.getExtras().get("data");
+            imgAvatar.setImageBitmap(bitmapGetData);
         } else if (requestCode == requetCodeScanMaDG && resultCode == Activity.RESULT_OK && data != null) {
             String maDG = data.getStringExtra(Scan.MA_THE);
             edMaDG.setText(maDG);
@@ -93,6 +143,10 @@ public class TaoDocGia extends Fragment {
     }
 
     private void anhXa(View view) {
+
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+
+
         btnDone = (Button) view.findViewById(R.id.btnTaoDone);
         imgAvatar = (ImageView) view.findViewById(R.id.imgTaoAvatar);
         imgScanMaDG = (ImageButton) view.findViewById(R.id.imgTaoScanMaDG);
@@ -103,6 +157,9 @@ public class TaoDocGia extends Fragment {
         edLop = (EditText) view.findViewById(R.id.ed_DG_Lop);
         edTenDangNhap = (EditText) view.findViewById(R.id.ed_DG_tenDangNhap);
         edMatKHau = (EditText) view.findViewById(R.id.ed_DG_MatKhau);
+        edNhapLaiMatKhau = (EditText) view.findViewById(R.id.ed_DG_NhapLaiMatKhau);
+
+        //imgAvatar.setImageDrawable(R.drawable.common_google_signin_btn_icon_light);
 
     }
 }
