@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -19,12 +20,16 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.Scan;
 
 import java.io.ByteArrayOutputStream;
+import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
@@ -33,14 +38,17 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class TaoDocGia extends Fragment {
-    private static final String keyKhoDocGia = "KhoDocGia";
+    public static final String keyKhoDocGia = "KhoDocGia";
+
     private final int requetCodeAvatar = 0, requetCodeScanMaDG = 1;
-    Bitmap bitmapGetData;
+    private Bitmap bitmapGetData;
     private ImageButton imgScanMaDG;
     private ImageView imgAvatar;
     private EditText edMaDG, edTenDG, edDiaChi, edSdt, edLop, edTenDangNhap, edMatKHau, edNhapLaiMatKhau;
     private Button btnDone;
     private DatabaseReference mDatabase;
+    private boolean check;
+    // private List<String> listTenDangNhap;
 
     @Nullable
     @Override
@@ -48,6 +56,7 @@ public class TaoDocGia extends Fragment {
         View view = inflater.inflate(R.layout.tao_taikhoan_dg, container, false);
         getActivity().setTitle("Tạo Tài Khoản Độc Giả");
         anhXa(view);
+        //listTenDangNhap = new ArrayList<>();
 
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -81,13 +90,14 @@ public class TaoDocGia extends Fragment {
         return stream.toByteArray();
     }
 
-
     private void doneAndupLoad() {
-        if (checkMaKhau() && checkSoDienThoai()) {
+        KiemTraTaoDocGia kiemTraTaoDocGia = new KiemTraTaoDocGia(); 
+        boolean checkMaDG = kiemTraTaoDocGia.kiemTra(edMaDG.getText().toString().trim(), mDatabase);
+        if (checkDoDai() && checkMaKhau() && checkSoDienThoai() && isCheck() && checkMaDG) {
             if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
 
                 DocGia docGia = new DocGia();
-                //docGia.setAvatar(getBytesFromBitmap(bitmapGetData));
+
                 String imgAvatar = Base64.encodeToString(getBytesFromBitmap(bitmapGetData), Base64.NO_WRAP);
                 docGia.setAvatar(imgAvatar);
                 docGia.setMaDocGia(edMaDG.getText().toString().trim());
@@ -98,7 +108,7 @@ public class TaoDocGia extends Fragment {
                 docGia.setTenDangNhap(edTenDangNhap.getText().toString());
                 docGia.setMatKhau(edMatKHau.getText().toString());
 
-                mDatabase.child(keyKhoDocGia).push().setValue(docGia); // set value bi loi, neu co them anh bitmap
+                mDatabase.child(keyKhoDocGia).push().setValue(docGia);
 
                 edNhapLaiMatKhau.setText("");
                 edMatKHau.setText("");
@@ -114,26 +124,86 @@ public class TaoDocGia extends Fragment {
                 edNhapLaiMatKhau.setError("");
                 Toasty.warning(getContext(), "Mật khẩu chưa khớp", Toast.LENGTH_SHORT).show();
             }
+        } else {
+            //Toasty.warning(getContext(), "Loi", Toast.LENGTH_SHORT).show();
         }
     }
+
+    private boolean checkDoDai() {
+        if (edTenDangNhap.length() > 0 && edSdt.length() > 0 && edMatKHau.length() > 0 && edLop.length() > 0
+                && edNhapLaiMatKhau.length() > 0 && edDiaChi.length() > 0 && edTenDG.length() > 0 && edMaDG.length() > 0 && bitmapGetData != null) {
+            return true;
+        } else {
+            Toasty.warning(getContext(), "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+    }
+
+
+    private void isgetTenDangNhap() {
+        mDatabase.child(TaoDocGia.keyKhoDocGia).addListenerForSingleValueEvent(
+                new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        //Get map of users in datasnapshot
+                        getTenDangNhap((Map<String, Object>) dataSnapshot.getValue());
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+                        //handle databaseError
+                    }
+                });
+    }
+
+    private boolean getTenDangNhap(Map<String, Object> users) {
+
+        //iterate through each user, ignoring their UID
+        for (Map.Entry<String, Object> entry : users.entrySet()) {
+            //Get user map
+            Map singleUser = (Map) entry.getValue();
+            //Log.d("tendangnhap", String.valueOf(singleUser.get("tenDangNhap")));
+            if (edTenDangNhap.getText().toString().trim().equals(String.valueOf(singleUser.get("tenDangNhap")))) {
+                Toasty.error(getContext(), "Loi trung", Toast.LENGTH_SHORT).show();
+                check = false;
+                return false;
+            }
+        }
+        //Toasty.info(getContext(), "Ấn Thêm lần nữa để tạo tài khoản", Toast.LENGTH_SHORT).show();
+        check = true;
+        return true;
+
+    }
+
+    private boolean isCheck() {
+        isgetTenDangNhap();
+        if (check) return true;
+        else return false;
+    }
+
 
     private boolean checkSoDienThoai() {
         if (edSdt.length() >= 10) {
             return true;
-        } else return false;
+        } else {
+            Toasty.warning(getContext(), "số điện thoại chưa đúng", Toast.LENGTH_SHORT).show();
+            return false;
+        }
+
     }
 
     private boolean checkMaKhau() {
-        if (edMatKHau.length() > 5) {
+        if (edMatKHau.length() >= 5) {
             return true;
         } else {
+            Toasty.warning(getContext(), "Mật khẩu cần hơn 5 ký tư", Toast.LENGTH_SHORT).show();
             return true;
 
         }
     }
 
     private void chonAnh() {
-        CharSequence[] mchonAnh = new CharSequence[]{"Chụp ảnh", "Chọn "};
+        CharSequence[] mchonAnh = new CharSequence[]{"Chụp ảnh", "Chọn ảnh"};
         AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
         builder.setTitle("Thay đổi ảnh");
 

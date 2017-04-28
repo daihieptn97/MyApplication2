@@ -7,7 +7,11 @@ package com.hieptran.quanlythuvien.fragment.TaoDocGia;
 public class DocGia {
     private String maDocGia, tenDG, diaChi, Sdt, lop, tenDangNhap, matKhau;
     //private byte[] avatar;
-    private  String avatar;
+    private String avatar;
+
+    public DocGia() {
+    }
+
     public String getMaDocGia() {
         return maDocGia;
     }
@@ -70,9 +74,5 @@ public class DocGia {
 
     public void setAvatar(String avatar) {
         this.avatar = avatar;
-    }
-
-    public DocGia() {
-
     }
 }

@@ -20,6 +20,7 @@ public class Scan extends AppCompatActivity implements ZXingScannerView.ResultHa
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(Scan.this);
         setContentView(mScannerView);
+        setTitle("Quét Mã");
         mScannerView.setResultHandler(Scan.this);
         mScannerView.startCamera();
 
@@ -34,9 +35,10 @@ public class Scan extends AppCompatActivity implements ZXingScannerView.ResultHa
     }
 
     @Override
-    protected void onPause() {
-        super.onPause();
+    public void onBackPressed() {
+        super.onBackPressed();
         mScannerView.stopCamera();
+        finish();
     }
 
     // Toggle flash:
@@ -48,6 +50,7 @@ public class Scan extends AppCompatActivity implements ZXingScannerView.ResultHa
         Intent returnIntent = new Intent();
         returnIntent.putExtra(MA_THE, mScan);
         setResult(RESULT_OK, returnIntent);
+        mScannerView.stopCamera();
         finish();
     }
 }

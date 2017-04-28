@@ -18,7 +18,6 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hieptran.quanlythuvien.Database.Account;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
-import com.hieptran.quanlythuvien.fragment.MainActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import es.dmoral.toasty.Toasty;

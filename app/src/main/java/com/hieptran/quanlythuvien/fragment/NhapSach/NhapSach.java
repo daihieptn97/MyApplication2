@@ -29,7 +29,7 @@ public class NhapSach extends Fragment {
     private Button btn_Done;
     private DatabaseReference mDatabase;
     private ImageButton img_maSach;
-    private final String Key_Kho = "KhoSach";
+    public static final String KeyKhoSach = "KhoSach";
 
     @Nullable
     @Override
@@ -66,7 +66,7 @@ public class NhapSach extends Fragment {
             sachNhap.setTheLoaiSach(ed_TheLoai.getText().toString());
             sachNhap.setTenSach(ed_TenSach.getText().toString());
             sachNhap.setSoLuong(Integer.parseInt(ed_soLuong.getText().toString()));
-            mDatabase.child(Key_Kho).push().setValue(sachNhap);
+            mDatabase.child(KeyKhoSach).push().setValue(sachNhap);
 
             ed_TenSach.setText("");
             ed_soLuong.setText("");

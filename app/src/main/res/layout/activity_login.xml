@@ -14,8 +14,8 @@
         android:layout_centerHorizontal="true"
         android:layout_centerVertical="true"
         android:visibility="gone"
-        app:indicatorColor="#f3ff0037"
-        app:indicatorName="BallPulseSyncIndicator" />
+        app:indicatorColor="#f8ff0004"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
 
     <RelativeLayout
         android:id="@+id/layoutLoginContent"
