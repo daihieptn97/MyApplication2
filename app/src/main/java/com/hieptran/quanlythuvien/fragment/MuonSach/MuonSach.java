@@ -135,7 +135,6 @@ public class MuonSach extends Fragment {
                 autoMaDocGia.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
                 if (cout == 2){
                     Toasty.success(getContext(), "Da load song  du lieu", Toast.LENGTH_SHORT).show();
-
                 }
             }
 

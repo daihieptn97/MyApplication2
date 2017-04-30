@@ -10,7 +10,6 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -20,16 +19,15 @@ import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
-import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.Scan;
 
 import java.io.ByteArrayOutputStream;
-import java.util.Map;
 
 import es.dmoral.toasty.Toasty;
 
@@ -40,6 +38,7 @@ import es.dmoral.toasty.Toasty;
 public class TaoDocGia extends Fragment {
     public static final String keyKhoDocGia = "KhoDocGia";
 
+
     private final int requetCodeAvatar = 0, requetCodeScanMaDG = 1;
     private Bitmap bitmapGetData;
     private ImageButton imgScanMaDG;
@@ -47,8 +46,6 @@ public class TaoDocGia extends Fragment {
     private EditText edMaDG, edTenDG, edDiaChi, edSdt, edLop, edTenDangNhap, edMatKHau, edNhapLaiMatKhau;
     private Button btnDone;
     private DatabaseReference mDatabase;
-    private boolean check;
-    // private List<String> listTenDangNhap;
 
     @Nullable
     @Override
@@ -91,11 +88,11 @@ public class TaoDocGia extends Fragment {
     }
 
     private void doneAndupLoad() {
-        KiemTraTaoDocGia kiemTraTaoDocGia = new KiemTraTaoDocGia(); 
-        boolean checkMaDG = kiemTraTaoDocGia.kiemTra(edMaDG.getText().toString().trim(), mDatabase);
-        if (checkDoDai() && checkMaKhau() && checkSoDienThoai() && isCheck() && checkMaDG) {
-            if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
 
+        checkMaDG();
+        if (checkDoDai() && checkMaKhau() && checkSoDienThoai() && mCheckMaDG) {
+            if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
+                mCheckMaDG = false;
                 DocGia docGia = new DocGia();
 
                 String imgAvatar = Base64.encodeToString(getBytesFromBitmap(bitmapGetData), Base64.NO_WRAP);
@@ -124,10 +121,48 @@ public class TaoDocGia extends Fragment {
                 edNhapLaiMatKhau.setError("");
                 Toasty.warning(getContext(), "Mật khẩu chưa khớp", Toast.LENGTH_SHORT).show();
             }
-        } else {
-            //Toasty.warning(getContext(), "Loi", Toast.LENGTH_SHORT).show();
         }
     }
+
+    boolean mCheckMaDG = false;
+
+    private void checkMaDG() {
+        mDatabase.child(keyKhoDocGia).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+                DocGia docGia = dataSnapshot.getValue(DocGia.class);
+                String maDGtemp = edMaDG.getText().toString().trim();
+                if (docGia.getMaDocGia().equals(maDGtemp)) {
+                    mCheckMaDG = true;
+                    Toasty.warning(getContext(), "Mã đã tồn tại", Toast.LENGTH_SHORT).show();
+                    return;
+                }
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
+    }
+
 
     private boolean checkDoDai() {
         if (edTenDangNhap.length() > 0 && edSdt.length() > 0 && edMatKHau.length() > 0 && edLop.length() > 0
@@ -137,48 +172,6 @@ public class TaoDocGia extends Fragment {
             Toasty.warning(getContext(), "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
             return false;
         }
-    }
-
-
-    private void isgetTenDangNhap() {
-        mDatabase.child(TaoDocGia.keyKhoDocGia).addListenerForSingleValueEvent(
-                new ValueEventListener() {
-                    @Override
-                    public void onDataChange(DataSnapshot dataSnapshot) {
-                        //Get map of users in datasnapshot
-                        getTenDangNhap((Map<String, Object>) dataSnapshot.getValue());
-                    }
-
-                    @Override
-                    public void onCancelled(DatabaseError databaseError) {
-                        //handle databaseError
-                    }
-                });
-    }
-
-    private boolean getTenDangNhap(Map<String, Object> users) {
-
-        //iterate through each user, ignoring their UID
-        for (Map.Entry<String, Object> entry : users.entrySet()) {
-            //Get user map
-            Map singleUser = (Map) entry.getValue();
-            //Log.d("tendangnhap", String.valueOf(singleUser.get("tenDangNhap")));
-            if (edTenDangNhap.getText().toString().trim().equals(String.valueOf(singleUser.get("tenDangNhap")))) {
-                Toasty.error(getContext(), "Loi trung", Toast.LENGTH_SHORT).show();
-                check = false;
-                return false;
-            }
-        }
-        //Toasty.info(getContext(), "Ấn Thêm lần nữa để tạo tài khoản", Toast.LENGTH_SHORT).show();
-        check = true;
-        return true;
-
-    }
-
-    private boolean isCheck() {
-        isgetTenDangNhap();
-        if (check) return true;
-        else return false;
     }
 
 

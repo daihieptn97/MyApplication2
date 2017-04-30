@@ -101,7 +101,6 @@
                     android:layout_alignStart="@+id/ed_DG_Diachi"
                     android:layout_below="@+id/ed_DG_Diachi"
                     android:layout_marginTop="10dp"
-
                     android:ems="10"
                     android:hint="Số Điện Thoại"
                     android:inputType="number" />

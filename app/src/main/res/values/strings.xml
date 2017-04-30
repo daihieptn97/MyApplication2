@@ -9,4 +9,5 @@
     <string name="nhap_sach">Nhập sách</string>
     <string name="nhap_sach_title">Nhập sách</string>
     <string name="Title_MuonSach">Mượn Sách</string>
+    <string name="tenPhanMem">Phần Mềm Quản Lý Thư Viện</string>
 </resources>
