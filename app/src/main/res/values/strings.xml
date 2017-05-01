@@ -12,4 +12,5 @@
     <string name="tenPhanMem">Phần Mềm Quản Lý Thư Viện</string>
     <string name="maTonTai">Mã đã tồn tại</string>
     <string name="wChuaDuThongTin">Chưa nhập đủ thông tin</string>
+    <string name="wTrungMaDG_tenDangNhap">Trùng mã độc gỉa hặc mã sinh viên</string>
 </resources>

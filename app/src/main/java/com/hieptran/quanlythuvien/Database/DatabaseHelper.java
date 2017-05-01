@@ -21,10 +21,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Datbse_Name = "QuanLyThuVien";
     public static final int version = 1;
 
-//    public static final String Tabble_DG_Name = "DocGia";
-//    public static final String key_DG_MaDG = "madocgia";
-//    public static final String key_DG_TenDangNhap = "tendangnhap";
-
     public static final String Table_login_Name = "Account";
     public static final String Key_login_Email = "email";
     public static final String Key_login_Password = "password";
@@ -38,7 +34,6 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE  TABLE \"main\".\"Account\" (\"id\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ," +
                 " \"email\" TEXT NOT NULL , \"password\" TEXT NOT NULL )");
 
-       // db.execSQL("PRIMARY KEY  AUTOINCREMENT  NOT NULL , \"madocgia\" TEXT NOT NULL , \"tendangnhap\" TEXT)");
     }
 
     @Override

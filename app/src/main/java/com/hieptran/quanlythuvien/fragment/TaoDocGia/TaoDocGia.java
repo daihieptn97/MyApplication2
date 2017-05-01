@@ -28,6 +28,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.Scan;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.ByteArrayOutputStream;
 import java.util.ArrayList;
@@ -44,8 +45,6 @@ public class TaoDocGia extends Fragment {
 
 
     private final int requetCodeAvatar = 0, requetCodeScanMaDG = 1;
-    boolean xong = false;
-    private boolean mCheckMaDG;
     private Bitmap bitmapGetData;
     private ImageButton imgScanMaDG;
     private ImageView imgAvatar;
@@ -54,6 +53,7 @@ public class TaoDocGia extends Fragment {
     private DatabaseReference mDatabase;
     private List<String> listMaDG, lisTenDangNhap;
     private String tempTenDangNhap, tempMaSV;
+    private AVLoadingIndicatorView progressbar;
 
     @Nullable
     @Override
@@ -83,10 +83,11 @@ public class TaoDocGia extends Fragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                progressbar.setVisibility(View.VISIBLE);
                 tempTenDangNhap = edTenDangNhap.getText().toString().trim();
                 tempMaSV = edMaDG.getText().toString().trim();
+
                 kiemTraMaDG();
-                //doneAndupLoad();
             }
         });
 
@@ -104,7 +105,7 @@ public class TaoDocGia extends Fragment {
     private void doneAndupLoad() {
 
 
-        if (checkDoDai() && checkMaKhau() && checkSoDienThoai() ) {
+        if (checkDoDai() && checkMaKhau() && checkSoDienThoai()) {
             if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
 
                 DocGia docGia = new DocGia();
@@ -129,10 +130,12 @@ public class TaoDocGia extends Fragment {
                 edTenDG.setText("");
                 edDiaChi.setText("");
                 edTenDangNhap.setText("");
+                progressbar.setVisibility(View.GONE);
                 Toasty.success(getContext(), "Tạo Thành Công", Toast.LENGTH_SHORT).show();
             } else {
                 edMatKHau.setError("");
                 edNhapLaiMatKhau.setError("");
+                progressbar.setVisibility(View.GONE);
                 Toasty.warning(getContext(), "Mật khẩu chưa khớp", Toast.LENGTH_SHORT).show();
             }
         }
@@ -179,12 +182,12 @@ public class TaoDocGia extends Fragment {
                         count--;
                     }
                 }
-
                 if (count == lisTenDangNhap.size()) {
                     doneAndupLoad();
 
                 } else {
-                    Toasty.warning(getContext(), "Trung ma doc gia", Toast.LENGTH_SHORT).show();
+                    progressbar.setVisibility(View.GONE);
+                    Toasty.warning(getContext(), getString(R.string.wTrungMaDG_tenDangNhap), Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -263,7 +266,7 @@ public class TaoDocGia extends Fragment {
 
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
-
+        progressbar = (AVLoadingIndicatorView) view.findViewById(R.id.processTaoTaiKHoan);
         btnDone = (Button) view.findViewById(R.id.btnTaoDone);
         imgAvatar = (ImageView) view.findViewById(R.id.imgTaoAvatar);
         imgScanMaDG = (ImageButton) view.findViewById(R.id.imgTaoScanMaDG);
