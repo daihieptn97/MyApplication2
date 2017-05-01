@@ -17,98 +17,103 @@
         app:indicatorColor="#f8ff0004"
         app:indicatorName="BallSpinFadeLoaderIndicator" />
 
-    <RelativeLayout
-        android:id="@+id/layoutLoginContent"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent">
+     <ScrollView
+         android:layout_width="match_parent"
+         android:layout_height="match_parent">
 
-        <TextView
-            android:id="@+id/tv_logo"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignParentTop="true"
-            android:layout_marginTop="55dp"
-            android:gravity="center"
-            android:text="@string/tenPhanMem"
-            android:textSize="24sp"
-            android:textStyle="bold" />
+         <RelativeLayout
+             android:id="@+id/layoutLoginContent"
+             android:layout_width="match_parent"
+             android:layout_height="match_parent">
 
-        <EditText
-            android:id="@+id/ed_Login_mail"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_alignParentEnd="true"
-            android:layout_alignParentRight="true"
-            android:layout_below="@+id/tv_logo"
-            android:layout_marginTop="99dp"
-            android:layout_toEndOf="@+id/imageView"
-            android:layout_toRightOf="@+id/imageView"
-            android:ems="10"
-            android:hint="Email"
-            android:inputType="textPersonName"
-            android:textColorLink="@color/colorPrimary" />
+             <TextView
+                 android:id="@+id/tv_logo"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true"
+                 android:layout_alignParentTop="true"
+                 android:layout_marginTop="55dp"
+                 android:gravity="center"
+                 android:text="@string/tenPhanMem"
+                 android:textSize="24sp"
+                 android:textStyle="bold" />
 
-        <EditText
-            android:id="@+id/ed_Login_pass"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ed_Login_mail"
-            android:layout_marginTop="28dp"
-            android:layout_toEndOf="@+id/imageView3"
-            android:layout_toRightOf="@+id/imageView3"
-            android:ems="10"
-            android:hint="Password"
-            android:inputType="textPassword"
-            android:textColorLink="@color/colorPrimary" />
+             <EditText
+                 android:id="@+id/ed_Login_mail"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_alignParentEnd="true"
+                 android:layout_alignParentRight="true"
+                 android:layout_below="@+id/tv_logo"
+                 android:layout_marginTop="99dp"
+                 android:layout_toEndOf="@+id/imageView"
+                 android:layout_toRightOf="@+id/imageView"
+                 android:ems="10"
+                 android:hint="Email"
+                 android:inputType="textPersonName"
+                 android:textColorLink="@color/colorPrimary" />
 
-        <Button
-            android:id="@+id/btn_login_DangNhap"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/check_nhoMatKhau"
-            android:layout_centerHorizontal="true"
-            android:layout_marginTop="26dp"
-            android:background="@drawable/cusstom_button_done"
-            android:text="Đăng Nhập" />
+             <EditText
+                 android:id="@+id/ed_Login_pass"
+                 android:layout_width="match_parent"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/ed_Login_mail"
+                 android:layout_marginTop="28dp"
+                 android:layout_toEndOf="@+id/imageView3"
+                 android:layout_toRightOf="@+id/imageView3"
+                 android:ems="10"
+                 android:hint="Password"
+                 android:inputType="textPassword"
+                 android:textColorLink="@color/colorPrimary" />
 
-        <CheckBox
-            android:id="@+id/check_nhoMatKhau"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_below="@+id/ed_Login_pass"
-            android:layout_marginTop="27dp"
-            android:layout_toEndOf="@+id/imageView3"
-            android:layout_toRightOf="@+id/imageView3"
-            android:text="Nhớ Mật Khẩu" />
+             <Button
+                 android:id="@+id/btn_login_DangNhap"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/check_nhoMatKhau"
+                 android:layout_centerHorizontal="true"
+                 android:layout_marginTop="26dp"
+                 android:background="@drawable/cusstom_button_done"
+                 android:text="Đăng Nhập" />
 
-        <CheckBox
-            android:id="@+id/checkBox_sinhvien"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:layout_alignBaseline="@+id/check_nhoMatKhau"
-            android:layout_alignBottom="@+id/check_nhoMatKhau"
-            android:layout_toEndOf="@+id/btn_login_DangNhap"
-            android:layout_toRightOf="@+id/btn_login_DangNhap"
-            android:text="Đọc giả" />
+             <CheckBox
+                 android:id="@+id/check_nhoMatKhau"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_below="@+id/ed_Login_pass"
+                 android:layout_marginTop="27dp"
+                 android:layout_toEndOf="@+id/imageView3"
+                 android:layout_toRightOf="@+id/imageView3"
+                 android:text="Nhớ Mật Khẩu" />
 
-        <ImageView
-            android:id="@+id/imageView"
-            android:layout_width="wrap_content"
-            android:layout_height="40dp"
-            android:layout_alignBottom="@+id/ed_Login_mail"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            app:srcCompat="@drawable/mail" />
+             <CheckBox
+                 android:id="@+id/checkBox_sinhvien"
+                 android:layout_width="wrap_content"
+                 android:layout_height="wrap_content"
+                 android:layout_alignBaseline="@+id/check_nhoMatKhau"
+                 android:layout_alignBottom="@+id/check_nhoMatKhau"
+                 android:layout_toEndOf="@+id/btn_login_DangNhap"
+                 android:layout_toRightOf="@+id/btn_login_DangNhap"
+                 android:text="Đọc giả" />
 
-        <ImageView
-            android:id="@+id/imageView3"
-            android:layout_width="wrap_content"
-            android:layout_height="37dp"
-            android:layout_alignParentLeft="true"
-            android:layout_alignParentStart="true"
-            android:layout_alignTop="@+id/ed_Login_pass"
-            app:srcCompat="@drawable/password_ic" />
-    </RelativeLayout>
+             <ImageView
+                 android:id="@+id/imageView"
+                 android:layout_width="wrap_content"
+                 android:layout_height="40dp"
+                 android:layout_alignBottom="@+id/ed_Login_mail"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true"
+                 app:srcCompat="@drawable/mail" />
+
+             <ImageView
+                 android:id="@+id/imageView3"
+                 android:layout_width="wrap_content"
+                 android:layout_height="37dp"
+                 android:layout_alignParentLeft="true"
+                 android:layout_alignParentStart="true"
+                 android:layout_alignTop="@+id/ed_Login_pass"
+                 app:srcCompat="@drawable/password_ic" />
+         </RelativeLayout>
+     </ScrollView>
 </RelativeLayout>
