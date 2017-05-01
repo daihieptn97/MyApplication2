@@ -13,10 +13,17 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.Scan;
+
+import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -30,12 +37,14 @@ public class NhapSach extends Fragment {
     private DatabaseReference mDatabase;
     private ImageButton img_maSach;
     public static final String KeyKhoSach = "KhoSach";
+    private String tempMaSach;
 
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.nhapsach, container, false);
         AnhXa(view);
+        lisMaSach = new ArrayList<>();
         Done();
 
 
@@ -53,7 +62,8 @@ public class NhapSach extends Fragment {
         btn_Done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                PutDataUpDatabase();
+                tempMaSach = ed_maSach.getText().toString().trim();
+                checkMasach();
             }
         });
     }
@@ -79,6 +89,60 @@ public class NhapSach extends Fragment {
 
     }
 
+    private List<String> lisMaSach;
+
+    private void checkMasach() {
+        mDatabase.child(KeyKhoSach).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+                SachNhap sachNhap = dataSnapshot.getValue(SachNhap.class);
+                lisMaSach.add(sachNhap.getMaSach());
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+        mDatabase.child(KeyKhoSach).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int count = lisMaSach.size();
+                for (int i = 0; i < lisMaSach.size(); i++) {
+                    if (tempMaSach.equals(lisMaSach.get(i))) {
+                        count--;
+                    }
+                }
+
+                if (count == lisMaSach.size()) {
+                    PutDataUpDatabase();
+                } else {
+                    Toasty.warning(getContext(), "Mã sách đã tồn tại", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void MaSach_Scan() {
         Intent intent = new Intent(getActivity(), Scan.class);
         startActivityForResult(intent, 1);
@@ -88,7 +152,7 @@ public class NhapSach extends Fragment {
     public void onActivityResult(int requestCode, int resultCode, Intent data) {
         super.onActivityResult(requestCode, resultCode, data);
         if (requestCode == 1 && resultCode == Activity.RESULT_OK) {
-            String maThe= data.getStringExtra(Scan.MA_THE);
+            String maThe = data.getStringExtra(Scan.MA_THE);
             ed_maSach.setText(maThe);
         }
     }

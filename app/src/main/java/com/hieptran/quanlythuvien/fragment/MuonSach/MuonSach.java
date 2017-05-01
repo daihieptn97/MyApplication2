@@ -9,9 +9,9 @@ import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 import android.widget.ArrayAdapter;
+import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
-import android.widget.MultiAutoCompleteTextView;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -20,6 +20,7 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.Scan;
@@ -27,6 +28,7 @@ import com.hieptran.quanlythuvien.fragment.NhapSach.NhapSach;
 import com.hieptran.quanlythuvien.fragment.NhapSach.SachNhap;
 import com.hieptran.quanlythuvien.fragment.TaoDocGia.DocGia;
 import com.hieptran.quanlythuvien.fragment.TaoDocGia.TaoDocGia;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.text.SimpleDateFormat;
 import java.util.ArrayList;
@@ -41,14 +43,16 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class MuonSach extends Fragment {
-    public static final String key_KhoMuonSach = "KhoMuonSach";
+    private  String key_KhoMuonSach = "KhoMuonSach", key_KhoSach =  "KhoSach", key_MaSach = "maSach", soLuong = "soLuong";
     private ImageButton imgMaSach, imgMaDocGia;
-    private MultiAutoCompleteTextView autoMaSach, autoMaDocGia;
+    private AutoCompleteTextView autoMaSach, autoMaDocGia;
     private TextView tvNgayMuon, tvNgayTra;
     private Button btn_Done;
     private DatabaseReference databaseReference;
     private List<String> listMaDG, listMaSach;
     private int cout = 0;
+    private AVLoadingIndicatorView progressBar;
+    private  String tempMaSach;
 
     @Nullable
     @Override
@@ -56,11 +60,11 @@ public class MuonSach extends Fragment {
         View view = inflater.inflate(R.layout.muonsach, container, false);
         getActivity().setTitle(R.string.Title_MuonSach);
         anhXa(view);
+        progressBar.show();
+        Toasty.info(getContext(), "Vui lòng Đợi  . . . ", Toast.LENGTH_LONG).show();
         listMaDG = new ArrayList<>();
         listMaSach = new ArrayList<>();
-
         getList();
-
 
         imgMaSach.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -83,6 +87,7 @@ public class MuonSach extends Fragment {
         btn_Done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
+                tempMaSach = autoMaSach.getText().toString();
                 doneUpLoad();
             }
         });
@@ -96,7 +101,9 @@ public class MuonSach extends Fragment {
             sachMuon.setMaSach(autoMaSach.getText().toString());
             sachMuon.setNgayMuon(getDateMuon());
             sachMuon.setNgayTra(getDateTra());
+            truSoLuongSach();
             databaseReference.child(key_KhoMuonSach).push().setValue(sachMuon);
+
 
             autoMaSach.setText("");
             autoMaDocGia.setText("");
@@ -106,6 +113,26 @@ public class MuonSach extends Fragment {
         }
     }
 
+    private void truSoLuongSach(){
+        Query query = databaseReference.child(key_KhoSach).orderByChild(key_MaSach).equalTo(tempMaSach);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                    SachNhap sachNhap = snapshot.getValue(SachNhap.class);
+                    snapshot.getRef().child(soLuong).setValue(sachNhap.getSoLuong() - 1);
+                    Log.d("AAAA", sachNhap.getSoLuong() + "");
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+    }
+
     private void getList() {
         databaseReference.child(NhapSach.KeyKhoSach).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -113,9 +140,10 @@ public class MuonSach extends Fragment {
                 cout += 1;
                 autoMaSach.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, listMaSach));
                 autoMaSach.setThreshold(1);
-                autoMaSach.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-                if (cout == 2){
-                    Toasty.success(getContext(), "Da load song  du lieu", Toast.LENGTH_SHORT).show();
+
+                if (cout == 2) {
+                    progressBar.setVisibility(View.GONE);
+                    Toasty.success(getContext(), "Đã Load Xong Dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -131,9 +159,10 @@ public class MuonSach extends Fragment {
                 cout += 1;
                 autoMaDocGia.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, listMaDG));
                 autoMaDocGia.setThreshold(1);
-                autoMaDocGia.setTokenizer(new MultiAutoCompleteTextView.CommaTokenizer());
-                if (cout == 2){
-                    Toasty.success(getContext(), "Da load song  du lieu", Toast.LENGTH_SHORT).show();
+
+                if (cout == 2) {
+                    progressBar.setVisibility(View.GONE);
+                    Toasty.success(getContext(), "Đã Load Xong Dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }
 
@@ -230,12 +259,12 @@ public class MuonSach extends Fragment {
     }
 
     private void anhXa(View view) {
-
+        progressBar = (AVLoadingIndicatorView) view.findViewById(R.id.processMuonSach);
         databaseReference = FirebaseDatabase.getInstance().getReference();
         imgMaDocGia = (ImageButton) view.findViewById(R.id.img_Muon_MaDG);
         imgMaSach = (ImageButton) view.findViewById(R.id.img_muon_MaSach);
-        autoMaDocGia = (MultiAutoCompleteTextView) view.findViewById(R.id.auto_Muon_MaDG);
-        autoMaSach = (MultiAutoCompleteTextView) view.findViewById(R.id.auto_Muon_MaSach);
+        autoMaDocGia = (AutoCompleteTextView) view.findViewById(R.id.auto_Muon_MaDG);
+        autoMaSach = (AutoCompleteTextView) view.findViewById(R.id.auto_Muon_MaSach);
         tvNgayMuon = (TextView) view.findViewById(R.id.tv_Muon_Ngaymuon);
         tvNgayTra = (TextView) view.findViewById(R.id.tv_Muon_NgayTra);
         btn_Done = (Button) view.findViewById(R.id.btn_muon_Done);
