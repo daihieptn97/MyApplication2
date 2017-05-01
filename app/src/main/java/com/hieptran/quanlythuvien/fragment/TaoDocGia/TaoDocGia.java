@@ -10,6 +10,7 @@ import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v7.app.AlertDialog;
 import android.util.Base64;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -24,10 +25,13 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.Scan;
 
 import java.io.ByteArrayOutputStream;
+import java.util.ArrayList;
+import java.util.List;
 
 import es.dmoral.toasty.Toasty;
 
@@ -40,12 +44,16 @@ public class TaoDocGia extends Fragment {
 
 
     private final int requetCodeAvatar = 0, requetCodeScanMaDG = 1;
+    boolean xong = false;
+    private boolean mCheckMaDG;
     private Bitmap bitmapGetData;
     private ImageButton imgScanMaDG;
     private ImageView imgAvatar;
     private EditText edMaDG, edTenDG, edDiaChi, edSdt, edLop, edTenDangNhap, edMatKHau, edNhapLaiMatKhau;
     private Button btnDone;
     private DatabaseReference mDatabase;
+    private List<String> listMaDG, lisTenDangNhap;
+    private String tempTenDangNhap, tempMaSV;
 
     @Nullable
     @Override
@@ -53,7 +61,9 @@ public class TaoDocGia extends Fragment {
         View view = inflater.inflate(R.layout.tao_taikhoan_dg, container, false);
         getActivity().setTitle("Tạo Tài Khoản Độc Giả");
         anhXa(view);
-        //listTenDangNhap = new ArrayList<>();
+        lisTenDangNhap = new ArrayList<>();
+        listMaDG = new ArrayList<>();
+
 
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -73,9 +83,13 @@ public class TaoDocGia extends Fragment {
         btnDone.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-                doneAndupLoad();
+                tempTenDangNhap = edTenDangNhap.getText().toString().trim();
+                tempMaSV = edMaDG.getText().toString().trim();
+                kiemTraMaDG();
+                //doneAndupLoad();
             }
         });
+
 
         return view;
     }
@@ -83,16 +97,16 @@ public class TaoDocGia extends Fragment {
     // convert from bitmap to byte array
     public byte[] getBytesFromBitmap(Bitmap bitmap) {
         ByteArrayOutputStream stream = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, stream);
+        bitmap.compress(Bitmap.CompressFormat.PNG, 70, stream);
         return stream.toByteArray();
     }
 
     private void doneAndupLoad() {
 
-        checkMaDG();
-        if (checkDoDai() && checkMaKhau() && checkSoDienThoai() && mCheckMaDG) {
+
+        if (checkDoDai() && checkMaKhau() && checkSoDienThoai() ) {
             if (edMatKHau.getText().toString().trim().equals(edNhapLaiMatKhau.getText().toString().trim())) {
-                mCheckMaDG = false;
+
                 DocGia docGia = new DocGia();
 
                 String imgAvatar = Base64.encodeToString(getBytesFromBitmap(bitmapGetData), Base64.NO_WRAP);
@@ -124,20 +138,13 @@ public class TaoDocGia extends Fragment {
         }
     }
 
-    boolean mCheckMaDG = false;
-
-    private void checkMaDG() {
+    private void kiemTraMaDG() {
         mDatabase.child(keyKhoDocGia).addChildEventListener(new ChildEventListener() {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
-
                 DocGia docGia = dataSnapshot.getValue(DocGia.class);
-                String maDGtemp = edMaDG.getText().toString().trim();
-                if (docGia.getMaDocGia().equals(maDGtemp)) {
-                    mCheckMaDG = true;
-                    Toasty.warning(getContext(), "Mã đã tồn tại", Toast.LENGTH_SHORT).show();
-                    return;
-                }
+                lisTenDangNhap.add(docGia.getTenDangNhap());
+                listMaDG.add(docGia.getMaDocGia());
             }
 
             @Override
@@ -161,6 +168,31 @@ public class TaoDocGia extends Fragment {
             }
         });
 
+        mDatabase.child(keyKhoDocGia).addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                int count = lisTenDangNhap.size();
+
+                for (int i = 0; i < lisTenDangNhap.size(); i++) {
+                    Log.d("AAAA", lisTenDangNhap.get(i) + " : " + tempMaSV);
+                    if (lisTenDangNhap.get(i).equals(tempTenDangNhap) || listMaDG.get(i).equals(tempMaSV)) {
+                        count--;
+                    }
+                }
+
+                if (count == lisTenDangNhap.size()) {
+                    doneAndupLoad();
+
+                } else {
+                    Toasty.warning(getContext(), "Trung ma doc gia", Toast.LENGTH_SHORT).show();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
@@ -169,7 +201,7 @@ public class TaoDocGia extends Fragment {
                 && edNhapLaiMatKhau.length() > 0 && edDiaChi.length() > 0 && edTenDG.length() > 0 && edMaDG.length() > 0 && bitmapGetData != null) {
             return true;
         } else {
-            Toasty.warning(getContext(), "Chưa nhập đủ thông tin", Toast.LENGTH_SHORT).show();
+            Toasty.warning(getContext(), getString(R.string.wChuaDuThongTin), Toast.LENGTH_SHORT).show();
             return false;
         }
     }
@@ -244,7 +276,6 @@ public class TaoDocGia extends Fragment {
         edMatKHau = (EditText) view.findViewById(R.id.ed_DG_MatKhau);
         edNhapLaiMatKhau = (EditText) view.findViewById(R.id.ed_DG_NhapLaiMatKhau);
 
-        //imgAvatar.setImageDrawable(R.drawable.common_google_signin_btn_icon_light);
 
     }
 }

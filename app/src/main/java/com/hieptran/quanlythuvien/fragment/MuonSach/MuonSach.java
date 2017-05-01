@@ -148,7 +148,7 @@ public class MuonSach extends Fragment {
             @Override
             public void onChildAdded(DataSnapshot dataSnapshot, String s) {
                 DocGia docGia = dataSnapshot.getValue(DocGia.class);
-                Log.d("ma123", docGia.getMaDocGia());
+                //Log.d("ma123", docGia.getMaDocGia());
                 listMaDG.add(docGia.getMaDocGia());
 
             }

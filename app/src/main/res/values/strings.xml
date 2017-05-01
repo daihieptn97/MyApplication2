@@ -10,4 +10,6 @@
     <string name="nhap_sach_title">Nhập sách</string>
     <string name="Title_MuonSach">Mượn Sách</string>
     <string name="tenPhanMem">Phần Mềm Quản Lý Thư Viện</string>
+    <string name="maTonTai">Mã đã tồn tại</string>
+    <string name="wChuaDuThongTin">Chưa nhập đủ thông tin</string>
 </resources>
