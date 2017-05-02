@@ -1,95 +1,83 @@
 <?xml version="1.0" encoding="utf-8"?>
-<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
-    android:layout_height="match_parent"
-    android:orientation="vertical">
+    android:layout_height="match_parent">
 
-    <!--<android.support.v7.widget.Toolbar-->
-    <!--android:id="@+id/toolbar3"-->
-    <!--android:layout_width="match_parent"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:background="?attr/colorPrimary"-->
-    <!--android:gravity="center"-->
-    <!--android:minHeight="?attr/actionBarSize"-->
-    <!--android:theme="?attr/actionBarTheme">-->
-
-    <!--<TextView-->
-    <!--android:layout_width="wrap_content"-->
-    <!--android:layout_height="wrap_content"-->
-    <!--android:layout_gravity="center"-->
-    <!--android:text="Nhập sách"-->
-    <!--android:textSize="24dp"-->
-    <!--android:textStyle="bold" />-->
-    <!--</android.support.v7.widget.Toolbar>-->
-
-    <EditText
-        android:id="@+id/ed_nhap_masach"
+    <RelativeLayout
         android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_toEndOf="@+id/img_nhap_MaSach"
-        android:layout_toRightOf="@+id/img_nhap_MaSach"
-        android:ems="10"
-        android:hint="Mã Sách"
-        android:inputType="textPersonName" />
+        android:layout_height="match_parent"
+        android:layout_marginTop="10dp">
 
-    <EditText
-        android:id="@+id/ed_nhap_TenSach"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ed_nhap_masach"
-        android:layout_marginTop="18dp"
-        android:layout_toEndOf="@+id/img_nhap_MaSach"
-        android:layout_toRightOf="@+id/img_nhap_MaSach"
-        android:ems="10"
-        android:hint="Tên Sách"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/ed_nhap_masach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_toEndOf="@+id/img_nhap_MaSach"
+            android:layout_toRightOf="@+id/img_nhap_MaSach"
+            android:ems="10"
+            android:hint="Mã Sách"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/ed_nhap_theloaisach"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ed_nhap_TenSach"
-        android:layout_alignParentEnd="true"
-        android:layout_alignParentRight="true"
-        android:layout_alignStart="@+id/ed_nhap_TenSach"
-        android:layout_below="@+id/ed_nhap_TenSach"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="Thể loại Sách"
-        android:inputType="textPersonName" />
+        <EditText
+            android:id="@+id/ed_nhap_TenSach"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ed_nhap_masach"
+            android:layout_marginTop="18dp"
+            android:layout_toEndOf="@+id/img_nhap_MaSach"
+            android:layout_toRightOf="@+id/img_nhap_MaSach"
+            android:ems="10"
+            android:hint="Tên Sách"
+            android:inputType="textPersonName" />
 
-    <EditText
-        android:id="@+id/ed_nhap_soluong"
-        android:layout_width="match_parent"
-        android:layout_height="wrap_content"
-        android:layout_alignLeft="@+id/ed_nhap_theloaisach"
-        android:layout_alignStart="@+id/ed_nhap_theloaisach"
-        android:layout_below="@+id/ed_nhap_theloaisach"
-        android:layout_marginTop="18dp"
-        android:ems="10"
-        android:hint="Số Lượng"
-        android:inputType="number" />
+        <EditText
+            android:id="@+id/ed_nhap_theloaisach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ed_nhap_TenSach"
+            android:layout_alignParentEnd="true"
+            android:layout_alignParentRight="true"
+            android:layout_alignStart="@+id/ed_nhap_TenSach"
+            android:layout_below="@+id/ed_nhap_TenSach"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="Thể loại Sách"
+            android:inputType="textPersonName" />
 
-    <Button
-        android:id="@+id/btn_nhap_Done"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_below="@+id/ed_nhap_soluong"
-        android:layout_centerHorizontal="true"
-        android:layout_marginTop="35dp"
-        android:background="@drawable/cusstom_button_done"
-        android:text="Done" />
+        <EditText
+            android:id="@+id/ed_nhap_soluong"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_alignLeft="@+id/ed_nhap_theloaisach"
+            android:layout_alignStart="@+id/ed_nhap_theloaisach"
+            android:layout_below="@+id/ed_nhap_theloaisach"
+            android:layout_marginTop="18dp"
+            android:ems="10"
+            android:hint="Số Lượng"
+            android:inputType="number" />
 
-    <ImageButton
-        android:id="@+id/img_nhap_MaSach"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_alignParentLeft="true"
-        android:layout_alignParentStart="true"
-        android:layout_alignTop="@+id/ed_nhap_masach"
-        app:srcCompat="@drawable/ic_menu_camera" />
+        <Button
+            android:id="@+id/btn_nhap_Done"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_below="@+id/ed_nhap_soluong"
+            android:layout_centerHorizontal="true"
+            android:layout_marginTop="35dp"
+            android:background="@drawable/cusstom_button_done"
+            android:text="Done" />
 
-</RelativeLayout>
+        <ImageButton
+            android:id="@+id/img_nhap_MaSach"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignTop="@+id/ed_nhap_masach"
+            app:srcCompat="@drawable/ic_menu_camera" />
+    </RelativeLayout>
+
+
+</ScrollView>

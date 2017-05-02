@@ -1,4 +1,4 @@
-package com.hieptran.quanlythuvien;
+package com.hieptran.quanlythuvien.QuanTriVien;
 
 import android.content.Intent;
 import android.os.Bundle;
@@ -17,12 +17,14 @@ import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
+import com.hieptran.quanlythuvien.Login;
+import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.NhapSach_main;
+import com.hieptran.quanlythuvien.QuanTriVien.fragment.MuonSach.MuonSach;
+import com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia.TaoDocGia;
+import com.hieptran.quanlythuvien.QuanTriVien.fragment.TraSach.TraSach;
+import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.TongQ.ThongTin;
 import com.hieptran.quanlythuvien.TongQ.TongQuan_NV;
-import com.hieptran.quanlythuvien.TraSach.TraSach;
-import com.hieptran.quanlythuvien.fragment.NhapSach.NhapSach;
-import com.hieptran.quanlythuvien.fragment.MuonSach.MuonSach;
-import com.hieptran.quanlythuvien.fragment.TaoDocGia.TaoDocGia;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {
@@ -101,7 +103,7 @@ public class MainActivity extends AppCompatActivity
         if (id == R.id.menu_TongQuan) {
             changeFragment(new TongQuan_NV());
         } else if (id == R.id.menu_ThemSach) {
-            changeFragment(new NhapSach());
+            startActivity(new Intent(getApplicationContext(), NhapSach_main.class));
         } else if (id == R.id.menu_Muonsach) {
             changeFragment(new MuonSach());
         } else if (id == R.id.menu_trasach) {
@@ -109,7 +111,11 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.menu_thongke) {
 
         } else if (id == R.id.nav_send) {
-
+            Intent intentSend = new Intent();
+            intentSend.setAction(Intent.ACTION_SEND);
+            intentSend.putExtra(Intent.EXTRA_TEXT, "Dang cap nhap link . .  .");
+            intentSend.setType("text/plain");
+            startActivity(intentSend);
         } else if (id == R.id.menu_ThongTin) {
             changeFragment(new ThongTin());
         } else if (id == R.id.menu_DangXuat) {

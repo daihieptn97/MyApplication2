@@ -7,10 +7,13 @@
 
     <string name="action_settings">Settings</string>
     <string name="nhap_sach">Nhập sách</string>
-    <string name="nhap_sach_title">Nhập sách</string>
+    <string name="nhap_sach_title">Nhập thông tin sách</string>
     <string name="Title_MuonSach">Mượn Sách</string>
     <string name="tenPhanMem">Phần Mềm Quản Lý Thư Viện</string>
     <string name="maTonTai">Mã đã tồn tại</string>
     <string name="wChuaDuThongTin">Chưa nhập đủ thông tin</string>
     <string name="wTrungMaDG_tenDangNhap">Trùng mã độc gỉa hặc mã sinh viên</string>
+    <string name="title_activity_nhap_sach_up_date">NhapSach_upDate</string>
+    <string name="section_format">Hello World from section: %1$d</string>
+    <string name="title_activity_nhap_sach_main">NhapSach_main</string>
 </resources>

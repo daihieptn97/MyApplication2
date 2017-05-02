@@ -1,4 +1,4 @@
-package com.hieptran.quanlythuvien.fragment.TaoDocGia;
+package com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia;
 
 /**
  * Created by daihieptn97 on 27/04/2017.

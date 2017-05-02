@@ -18,6 +18,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hieptran.quanlythuvien.Database.Account;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
+import com.hieptran.quanlythuvien.QuanTriVien.MainActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import es.dmoral.toasty.Toasty;
@@ -52,7 +53,7 @@ public class Login extends AppCompatActivity {
 
                             progressBar.setVisibility(View.VISIBLE);
                             progressBar.show();
-                            layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
+                            //layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
                             dangNhap();
                         }
                     } else {
@@ -82,7 +83,7 @@ public class Login extends AppCompatActivity {
             if (ed_password.length() > 0 && ed_Email.length() > 0) {
                 progressBar.setVisibility(View.VISIBLE);
                 progressBar.show();
-                layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
+                //layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
 
                 auth.signInWithEmailAndPassword(ed_Email.getText().toString().trim(), ed_password.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                     @Override

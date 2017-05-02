@@ -21,7 +21,7 @@
             </intent-filter>
         </activity>
         <activity
-            android:name=".MainActivity"
+            android:name=".QuanTriVien.MainActivity"
             android:label="@string/title_activity_main"
             android:theme="@style/AppTheme.NoActionBar" />
 
@@ -29,7 +29,11 @@
             android:name="com.google.android.gms.vision.DEPENDENCIES"
             android:value="barcode" />
 
-        <activity android:name=".Scan"></activity>
+        <activity android:name=".QuanTriVien.Scan" />
+        <activity
+            android:name=".QuanTriVien.NhapSach.NhapSach_main"
+            android:label="@string/title_activity_nhap_sach_main"
+            android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 
 </manifest>
