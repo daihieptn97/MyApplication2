@@ -6,7 +6,7 @@ package com.hieptran.quanlythuvien.QuanTriVien.NhapSach;
 
 public class SachNhap {
     private String maSach;
-    private String maLoaiSach;
+    private String theLoai;
     private int soLuong;
     private String TenSach;
 
@@ -26,12 +26,12 @@ public class SachNhap {
         this.maSach = maSach;
     }
 
-    public String getMaLoaiSach() {
-        return maLoaiSach;
+    public String getTheLoai() {
+        return theLoai;
     }
 
     public void setTheLoaiSach(String maLoaiSach) {
-        this.maLoaiSach = maLoaiSach;
+        this.theLoai = maLoaiSach;
     }
 
     public int getSoLuong() {
