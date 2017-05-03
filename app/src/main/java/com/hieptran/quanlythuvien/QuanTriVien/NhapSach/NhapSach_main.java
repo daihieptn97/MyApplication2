@@ -11,6 +11,7 @@ import android.support.v7.widget.Toolbar;
 import android.view.Menu;
 import android.view.MenuItem;
 
+import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.Adapter_nhapsach.DanhsachSach;
 import com.hieptran.quanlythuvien.R;
 
 import java.util.ArrayList;
@@ -37,6 +38,7 @@ public class NhapSach_main extends AppCompatActivity {
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addList(new NhapSach(), "Nhập sách");
         mSectionsPagerAdapter.addList(new CapNhapSach(), "Cập Nhập Sách");
+        mSectionsPagerAdapter.addList(new DanhsachSach(), "Danh sách sách");
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);
@@ -58,9 +60,7 @@ public class NhapSach_main extends AppCompatActivity {
 
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
-        // Handle action bar item clicks here. The action bar will
-        // automatically handle clicks on the Home/Up button, so long
-        // as you specify a parent activity in AndroidManifest.xml.
+
         int id = item.getItemId();
 
         //noinspection SimplifiableIfStatement
@@ -88,7 +88,7 @@ public class NhapSach_main extends AppCompatActivity {
             return fragmentArrayList.get(position);
         }
 
-        public  void addList(Fragment fragment, String title){
+        public void addList(Fragment fragment, String title) {
             fragmentArrayList.add(fragment);
             titleList.add(title);
         }

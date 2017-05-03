@@ -19,8 +19,8 @@ import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
-import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.QuanTriVien.Scan;
+import com.hieptran.quanlythuvien.R;
 
 import java.util.ArrayList;
 import java.util.List;
@@ -55,7 +55,7 @@ public class NhapSach extends Fragment {
                 MaSach_Scan();
             }
         });
-       // getActivity().setTitle(R.string.nhap_sach_title);
+        // getActivity().setTitle(R.string.nhap_sach_title);
         return view;
     }
 
@@ -84,6 +84,7 @@ public class NhapSach extends Fragment {
             ed_TheLoai.setText("");
             ed_maSach.setText("");
             Toasty.success(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT, true).show();
+            lisMaSach = null;
         } else
             Toasty.warning(getContext(), "Bạn chưa nhập đủ Thông tin", Toast.LENGTH_SHORT).show();
 

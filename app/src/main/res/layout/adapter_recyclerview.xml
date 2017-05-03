@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TableRow
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+
+        <TextView
+            android:id="@+id/tv_recycler_masach"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Mã Sách"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_recycler_tensach"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Tên Sách"
+            android:textSize="20dp" />
+
+        <TextView
+            android:id="@+id/tv_recycler_soluong"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:text="Số Lượng"
+            android:textSize="20dp" />
+    </TableRow>
+
+
+</TableLayout>
