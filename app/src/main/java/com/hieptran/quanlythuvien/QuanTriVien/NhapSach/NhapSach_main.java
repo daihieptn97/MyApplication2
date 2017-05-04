@@ -36,9 +36,9 @@ public class NhapSach_main extends AppCompatActivity {
         // Create the adapter that will return a fragment for each of the three
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
-        mSectionsPagerAdapter.addList(new NhapSach(), "Nhập sách");
-        mSectionsPagerAdapter.addList(new CapNhapSach(), "Cập Nhập Sách");
-        mSectionsPagerAdapter.addList(new DanhsachSach(), "Danh sách sách");
+        mSectionsPagerAdapter.addList(new NhapSach(), "Thêm sách");
+        mSectionsPagerAdapter.addList(new CapNhapSach(), "Cập Nhập");
+        mSectionsPagerAdapter.addList(new DanhsachSach(), "Danh sách");
 
         // Set up the ViewPager with the sections adapter.
         mViewPager = (ViewPager) findViewById(R.id.container);

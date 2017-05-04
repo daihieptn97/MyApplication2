@@ -9,7 +9,7 @@
         <item
             android:id="@+id/menu_ThemSach"
             android:icon="@drawable/themsachvaokho"
-            android:title="Thêm Sách Vào Kho" />
+            android:title="Quản Lý Sách" />
         <item
             android:id="@+id/menu_Muonsach"
             android:icon="@drawable/muonsach"

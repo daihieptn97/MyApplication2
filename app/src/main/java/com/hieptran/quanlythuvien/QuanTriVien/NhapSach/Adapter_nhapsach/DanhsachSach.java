@@ -7,6 +7,7 @@ import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,7 +28,7 @@ import java.util.ArrayList;
  * Created by Hiep Tran on 5/3/2017.
  */
 
-public class DanhsachSach extends Fragment {
+public class DanhsachSach extends Fragment implements SearchView.OnQueryTextListener {
     private RecyclerView recyclerView;
     private SearchView searchView;
     private DatabaseReference mDatabase;
@@ -58,9 +59,7 @@ public class DanhsachSach extends Fragment {
             }
         });
 
-
-
-
+        searchView.setOnQueryTextListener(this);
 
         return view;
     }
@@ -120,5 +119,19 @@ public class DanhsachSach extends Fragment {
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout_danhsachSach);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         progressBar = (AVLoadingIndicatorView) view.findViewById(R.id.progressBarDanhSach);
+    }
+
+    @Override
+    public boolean onQueryTextSubmit(String query) { // dang doi su l y
+        Log.d("AAAA", query);
+
+        return false;
+    }
+
+    @Override
+    public boolean onQueryTextChange(String newText) {
+
+
+        return false;
     }
 }
