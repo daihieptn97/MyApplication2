@@ -19,6 +19,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.SachNhap;
 import com.hieptran.quanlythuvien.R;
+import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
 
@@ -32,6 +33,8 @@ public class DanhsachSach extends Fragment {
     private DatabaseReference mDatabase;
     private ArrayList<SachNhap> sachNhapList;
     private SwipeRefreshLayout refreshLayout;
+    private AVLoadingIndicatorView progressBar;
+
 
     @Nullable
     @Override
@@ -41,17 +44,22 @@ public class DanhsachSach extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-        //refreshLayout.setColorSchemeResources(R.color.blue, R.color.purple, R.color.green, R.color.orange);
+
+        progressBar.setVisibility(View.VISIBLE);
         loadData();
-        //refreshLayout.setVisibility(View.GONE);
+
         refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
             @Override
             public void onRefresh() {
                 refreshLayout.setColorSchemeResources(R.color.blue, R.color.purple, R.color.green, R.color.orange);
+                sachNhapList.removeAll(sachNhapList);
                 loadData();
-                //refreshLayout.setVisibility(View.GONE);
+                refreshLayout.setRefreshing(false);
             }
         });
+
+
+
 
 
         return view;
@@ -94,6 +102,7 @@ public class DanhsachSach extends Fragment {
                 Adapter_DanhSach adapter_danhSach = new Adapter_DanhSach(sachNhapList, getContext().getApplicationContext());
                 recyclerView.setAdapter(adapter_danhSach);
                 adapter_danhSach.notifyDataSetChanged();
+                progressBar.setVisibility(View.GONE);
             }
 
             @Override
@@ -110,5 +119,6 @@ public class DanhsachSach extends Fragment {
         searchView = (SearchView) view.findViewById(R.id.search_sach);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout_danhsachSach);
         mDatabase = FirebaseDatabase.getInstance().getReference();
+        progressBar = (AVLoadingIndicatorView) view.findViewById(R.id.progressBarDanhSach);
     }
 }

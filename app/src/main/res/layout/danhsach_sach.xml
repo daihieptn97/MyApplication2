@@ -1,30 +1,46 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:gravity="center"
     android:orientation="vertical">
 
-
-    <android.support.v7.widget.SearchView
-        android:id="@+id/search_sach"
-        android:layout_width="match_parent"
+    <com.wang.avi.AVLoadingIndicatorView
+        android:id="@+id/progressBarDanhSach"
+        style="@style/AVLoadingIndicatorView"
+        android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        app:queryHint="Tìm kiếm sách">
+        android:layout_centerHorizontal="true"
+        android:layout_centerVertical="true"
+        android:visibility="gone"
+        app:indicatorColor="#f8ff0004"
+        app:indicatorName="BallSpinFadeLoaderIndicator" />
 
-    </android.support.v7.widget.SearchView>
-
-
-    <android.support.v4.widget.SwipeRefreshLayout
-        android:id="@+id/SwipeRefreshLayout_danhsachSach"
+    <LinearLayout
         android:layout_width="match_parent"
-        android:layout_height="match_parent">
+        android:layout_height="match_parent"
+        android:orientation="vertical">
 
-        <android.support.v7.widget.RecyclerView
-            android:id="@+id/recycler_danhsach_sach"
+        <android.support.v7.widget.SearchView
+            android:id="@+id/search_sach"
             android:layout_width="match_parent"
-            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+            android:layout_height="wrap_content"
+            app:queryHint="Tìm kiếm sách"></android.support.v7.widget.SearchView>
 
-    </android.support.v4.widget.SwipeRefreshLayout>
 
-</LinearLayout>
+        <android.support.v4.widget.SwipeRefreshLayout
+            android:id="@+id/SwipeRefreshLayout_danhsachSach"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent">
+
+            <android.support.v7.widget.RecyclerView
+                android:id="@+id/recycler_danhsach_sach"
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
+
+        </android.support.v4.widget.SwipeRefreshLayout>
+    </LinearLayout>
+
+
+</RelativeLayout>

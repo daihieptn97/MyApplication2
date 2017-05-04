@@ -84,7 +84,7 @@ public class NhapSach extends Fragment {
             ed_TheLoai.setText("");
             ed_maSach.setText("");
             Toasty.success(getContext(), "Thêm Thành Công", Toast.LENGTH_SHORT, true).show();
-            lisMaSach = null;
+            lisMaSach.removeAll(lisMaSach);
         } else
             Toasty.warning(getContext(), "Bạn chưa nhập đủ Thông tin", Toast.LENGTH_SHORT).show();
 
