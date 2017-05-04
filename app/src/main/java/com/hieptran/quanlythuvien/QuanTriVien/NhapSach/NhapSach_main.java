@@ -71,6 +71,11 @@ public class NhapSach_main extends AppCompatActivity {
         return super.onOptionsItemSelected(item);
     }
 
+    @Override
+    public void onBackPressed() {
+        super.onBackPressed();
+        finish();
+    }
 
     public class SectionsPagerAdapter extends FragmentPagerAdapter {
 

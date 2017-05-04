@@ -73,10 +73,10 @@ public class NhapSach extends Fragment {
     private void PutDataUpDatabase() {
         if (ed_maSach.length() > 0 && ed_TheLoai.length() > 0 && ed_soLuong.length() > 0 && ed_TenSach.length() > 0) {
             SachNhap sachNhap = new SachNhap();
-            sachNhap.setMaSach(ed_maSach.getText().toString());
-            sachNhap.setTheLoaiSach(ed_TheLoai.getText().toString());
-            sachNhap.setTenSach(ed_TenSach.getText().toString());
-            sachNhap.setSoLuong(Integer.parseInt(ed_soLuong.getText().toString()));
+            sachNhap.setMaSach(ed_maSach.getText().toString().trim());
+            sachNhap.setTheLoaiSach(ed_TheLoai.getText().toString().trim());
+            sachNhap.setTenSach(ed_TenSach.getText().toString().trim());
+            sachNhap.setSoLuong(Integer.parseInt(ed_soLuong.getText().toString().trim()));
             mDatabase.child(KeyKhoSach).push().setValue(sachNhap);
 
             ed_TenSach.setText("");

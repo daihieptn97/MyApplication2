@@ -53,7 +53,7 @@ public class Adapter_DanhSach extends RecyclerView.Adapter<Adapter_DanhSach.view
         public viewHolder(View itemView) {
 
             super(itemView);
-            tv_Masach = (TextView) itemView.findViewById(R.id.tv_recycler_masach);
+            tv_Masach = (TextView) itemView.findViewById(R.id.tv_recycler_MaSach);
             tv_SoLuong = (TextView) itemView.findViewById(R.id.tv_recycler_soluong);
             tv_tenSach = (TextView) itemView.findViewById(R.id.tv_recycler_tensach);
         }

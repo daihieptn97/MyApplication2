@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
@@ -14,6 +15,7 @@ import android.widget.EditText;
 import android.widget.ImageButton;
 import android.widget.Toast;
 
+import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
@@ -34,6 +36,7 @@ public class CapNhapSach extends Fragment {
     private EditText edMaSach, edSoLuong, edTheLoai;
     private Button btnDone;
     private ImageButton imgMaSach;
+
     private DatabaseReference mDatabase;
     private String key_KhoSach = "KhoSach", key_MaSach = "maSach", soLuong = "soLuong", key_TheLoai = "theLoai";
 
@@ -57,10 +60,6 @@ public class CapNhapSach extends Fragment {
                     tempSoLuong = edSoLuong.getText().toString().trim();
                     tempTheLoai = edTheLoai.getText().toString().trim();
                     capNhapThongTin();
-
-                    edMaSach.setText("");
-                    edSoLuong.setText("");
-                    edTheLoai.setText("");
                 }
             }
         });
@@ -70,12 +69,39 @@ public class CapNhapSach extends Fragment {
 
     private String tempMaSach, tempSoLuong, tempTheLoai; // để tránh việc suống hàm con không get được giá trị từ editText
 
-    private void capNhapThongTin() {
+    private void capNhapThongTin(){
+        mDatabase.child(key_KhoSach).addChildEventListener(new ChildEventListener() {
+            @Override
+            public void onChildAdded(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildChanged(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onChildRemoved(DataSnapshot dataSnapshot) {
+
+            }
+
+            @Override
+            public void onChildMoved(DataSnapshot dataSnapshot, String s) {
+
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
+
         Query query = mDatabase.child(key_KhoSach).orderByChild(key_MaSach).equalTo(tempMaSach);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     SachNhap sachNhap = snapshot.getValue(SachNhap.class);
                     if (kiemTraSoLuong()) {
                         Log.d("AAAA", sachNhap.getSoLuong() + " : " + Integer.parseInt(tempSoLuong));
@@ -84,15 +110,16 @@ public class CapNhapSach extends Fragment {
                     if (kiemTraTheLoai()) {
                         snapshot.getRef().child(key_TheLoai).setValue(tempTheLoai);
                     }
+
                 }
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
-
+                Toast.makeText(getContext(), (CharSequence) databaseError.toException(), Toast.LENGTH_SHORT).show();
             }
         });
     }
+
 
     private boolean kiemTraSoLuong() {
         if (edSoLuong.length() > 0 && Integer.parseInt(edSoLuong.getText().toString().trim()) > 0)
@@ -128,6 +155,7 @@ public class CapNhapSach extends Fragment {
 
     private void AnhXa(View view) {
         mDatabase = FirebaseDatabase.getInstance().getReference();
+
         edMaSach = (EditText) view.findViewById(R.id.ed_CapNhapMasach);
         edSoLuong = (EditText) view.findViewById(R.id.ed_CapNhapSoLuong);
         edTheLoai = (EditText) view.findViewById(R.id.ed_capnhapTheLoai);

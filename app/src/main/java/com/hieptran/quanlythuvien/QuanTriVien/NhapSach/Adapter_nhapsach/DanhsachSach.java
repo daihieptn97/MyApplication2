@@ -3,6 +3,7 @@ package com.hieptran.quanlythuvien.QuanTriVien.NhapSach.Adapter_nhapsach;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.support.v4.widget.SwipeRefreshLayout;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
 import android.support.v7.widget.SearchView;
@@ -30,6 +31,7 @@ public class DanhsachSach extends Fragment {
     private SearchView searchView;
     private DatabaseReference mDatabase;
     private ArrayList<SachNhap> sachNhapList;
+    private SwipeRefreshLayout refreshLayout;
 
     @Nullable
     @Override
@@ -39,8 +41,19 @@ public class DanhsachSach extends Fragment {
 
         LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
         recyclerView.setLayoutManager(linearLayoutManager);
-
+        //refreshLayout.setColorSchemeResources(R.color.blue, R.color.purple, R.color.green, R.color.orange);
         loadData();
+        //refreshLayout.setVisibility(View.GONE);
+        refreshLayout.setOnRefreshListener(new SwipeRefreshLayout.OnRefreshListener() {
+            @Override
+            public void onRefresh() {
+                refreshLayout.setColorSchemeResources(R.color.blue, R.color.purple, R.color.green, R.color.orange);
+                loadData();
+                //refreshLayout.setVisibility(View.GONE);
+            }
+        });
+
+
         return view;
     }
 
@@ -95,7 +108,7 @@ public class DanhsachSach extends Fragment {
         recyclerView = (RecyclerView) view.findViewById(R.id.recycler_danhsach_sach);
         recyclerView.setHasFixedSize(true); // can chinh kich thuoc phu hop voi app
         searchView = (SearchView) view.findViewById(R.id.search_sach);
-
+        refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout_danhsachSach);
         mDatabase = FirebaseDatabase.getInstance().getReference();
     }
 }

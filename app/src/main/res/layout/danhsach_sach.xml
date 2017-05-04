@@ -14,33 +14,17 @@
 
     </android.support.v7.widget.SearchView>
 
-    <TableRow
+
+    <android.support.v4.widget.SwipeRefreshLayout
+        android:id="@+id/SwipeRefreshLayout_danhsachSach"
         android:layout_width="match_parent"
-        android:layout_height="wrap_content">
+        android:layout_height="match_parent">
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Mã Sách"
-            android:textSize="20dp" />
+        <android.support.v7.widget.RecyclerView
+            android:id="@+id/recycler_danhsach_sach"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
 
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Tên Sách"
-            android:textSize="20dp" />
-
-        <TextView
-            android:layout_height="wrap_content"
-            android:layout_weight="1"
-            android:text="Số Lượng"
-            android:textSize="20dp" />
-    </TableRow>
-
-    <android.support.v7.widget.RecyclerView
-        android:id="@+id/recycler_danhsach_sach"
-        android:layout_width="match_parent"
-        android:layout_height="match_parent"></android.support.v7.widget.RecyclerView>
-
+    </android.support.v4.widget.SwipeRefreshLayout>
 
 </LinearLayout>
