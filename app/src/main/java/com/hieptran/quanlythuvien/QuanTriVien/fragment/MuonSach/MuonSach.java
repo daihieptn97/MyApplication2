@@ -142,6 +142,7 @@ public class MuonSach extends Fragment {
 
                 if (cout == 2) {
                     progressBar.setVisibility(View.GONE);
+                    progressBar.hide();
                     Toasty.success(getContext(), "Đã Load Xong Dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }
@@ -161,6 +162,7 @@ public class MuonSach extends Fragment {
 
                 if (cout == 2) {
                     progressBar.setVisibility(View.GONE);
+                    progressBar.hide();
                     Toasty.success(getContext(), "Đã Load Xong Dữ liệu", Toast.LENGTH_SHORT).show();
                 }
             }

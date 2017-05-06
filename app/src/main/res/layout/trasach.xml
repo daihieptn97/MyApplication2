@@ -14,7 +14,7 @@
         android:layout_marginTop="62dp"
         app:srcCompat="@drawable/ic_menu_camera" />
 
-    <MultiAutoCompleteTextView
+    <AutoCompleteTextView
         android:id="@+id/auto_Tra_Masach"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
@@ -34,7 +34,7 @@
         android:layout_marginTop="32dp"
         app:srcCompat="@drawable/ic_menu_camera" />
 
-    <MultiAutoCompleteTextView
+    <AutoCompleteTextView
         android:id="@+id/auto_Tra_MaDG"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
