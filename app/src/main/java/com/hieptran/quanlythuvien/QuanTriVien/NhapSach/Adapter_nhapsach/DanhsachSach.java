@@ -1,40 +1,51 @@
 package com.hieptran.quanlythuvien.QuanTriVien.NhapSach.Adapter_nhapsach;
 
+import android.content.DialogInterface;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
-import android.support.v7.widget.LinearLayoutManager;
-import android.support.v7.widget.RecyclerView;
+import android.support.v7.app.AlertDialog;
 import android.support.v7.widget.SearchView;
 import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.AdapterView;
+import android.widget.ListView;
+import android.widget.Toast;
 
 import com.google.firebase.database.ChildEventListener;
 import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.SachNhap;
 import com.hieptran.quanlythuvien.R;
+
+import com.orhanobut.dialogplus.DialogPlus;
+import com.orhanobut.dialogplus.OnItemClickListener;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.util.ArrayList;
+
+import es.dmoral.toasty.Toasty;
 
 /**
  * Created by Hiep Tran on 5/3/2017.
  */
 
-public class DanhsachSach extends Fragment implements SearchView.OnQueryTextListener {
-    private RecyclerView recyclerView;
+public class DanhsachSach extends Fragment {
+    private ListView lv_danhsach;
     private SearchView searchView;
+    private Adapter_DanhSach adapter;
     private DatabaseReference mDatabase;
     private ArrayList<SachNhap> sachNhapList;
     private SwipeRefreshLayout refreshLayout;
     private AVLoadingIndicatorView progressBar;
+    private final String key_KhoSach = "KhoSach", key_MaSach = "maSach";
 
 
     @Nullable
@@ -43,8 +54,6 @@ public class DanhsachSach extends Fragment implements SearchView.OnQueryTextList
         View view = inflater.inflate(R.layout.danhsach_sach, container, false);
         anhXa(view);
 
-        LinearLayoutManager linearLayoutManager = new LinearLayoutManager(getContext(), LinearLayoutManager.VERTICAL, false);
-        recyclerView.setLayoutManager(linearLayoutManager);
 
         progressBar.setVisibility(View.VISIBLE);
         loadData();
@@ -59,12 +68,52 @@ public class DanhsachSach extends Fragment implements SearchView.OnQueryTextList
             }
         });
 
-        searchView.setOnQueryTextListener(this);
+
+        lv_danhsach.setOnItemLongClickListener(new AdapterView.OnItemLongClickListener() {
+            @Override
+            public boolean onItemLongClick(AdapterView<?> parent, View view, final int position, long id) {
+                AlertDialog.Builder builder = new AlertDialog.Builder(getContext());
+                builder.setMessage("Bạn Có muốn Xóa không ?");
+                builder.setPositiveButton("Xóa", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+
+
+                        Query query = mDatabase.child(key_KhoSach).orderByChild(key_MaSach).equalTo(sachNhapList.get(position).getMaSach());
+                        sachNhapList.remove(position);
+                        adapter.notifyDataSetChanged();
+                        query.addListenerForSingleValueEvent(new ValueEventListener() {
+                            @Override
+                            public void onDataChange(DataSnapshot dataSnapshot) {
+                                for(DataSnapshot snapshot : dataSnapshot.getChildren()){
+                                    snapshot.getRef().removeValue();
+                                }
+                            }
+
+                            @Override
+                            public void onCancelled(DatabaseError databaseError) {
+
+                            }
+                        });
+                    }
+                });
+
+                builder.setNegativeButton("Hủy", new DialogInterface.OnClickListener() {
+                    @Override
+                    public void onClick(DialogInterface dialog, int which) {
+                        dialog.dismiss();
+                    }
+                });
+
+                builder.show();
+                return false;
+            }
+        });
 
         return view;
     }
 
-    private final String key_KhoSach = "KhoSach";
+
 
     private void loadData() {
         mDatabase.child(key_KhoSach).addChildEventListener(new ChildEventListener() {
@@ -98,9 +147,9 @@ public class DanhsachSach extends Fragment implements SearchView.OnQueryTextList
         mDatabase.child(key_KhoSach).addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
-                Adapter_DanhSach adapter_danhSach = new Adapter_DanhSach(sachNhapList, getContext().getApplicationContext());
-                recyclerView.setAdapter(adapter_danhSach);
-                adapter_danhSach.notifyDataSetChanged();
+                adapter = new Adapter_DanhSach(sachNhapList, getContext(), R.layout.adapter_recyclerview);
+                lv_danhsach.setAdapter(adapter);
+                adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
 
@@ -113,25 +162,13 @@ public class DanhsachSach extends Fragment implements SearchView.OnQueryTextList
 
     private void anhXa(View view) {
         sachNhapList = new ArrayList<>();
-        recyclerView = (RecyclerView) view.findViewById(R.id.recycler_danhsach_sach);
-        recyclerView.setHasFixedSize(true); // can chinh kich thuoc phu hop voi app
+        lv_danhsach = (ListView) view.findViewById(R.id.lv_danhsach_sach);
+
         searchView = (SearchView) view.findViewById(R.id.search_sach);
         refreshLayout = (SwipeRefreshLayout) view.findViewById(R.id.SwipeRefreshLayout_danhsachSach);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         progressBar = (AVLoadingIndicatorView) view.findViewById(R.id.progressBarDanhSach);
     }
 
-    @Override
-    public boolean onQueryTextSubmit(String query) { // dang doi su l y
-        Log.d("AAAA", query);
 
-        return false;
-    }
-
-    @Override
-    public boolean onQueryTextChange(String newText) {
-
-
-        return false;
-    }
 }

@@ -104,7 +104,7 @@ public class CapNhapSach extends Fragment {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()){
                     SachNhap sachNhap = snapshot.getValue(SachNhap.class);
                     if (kiemTraSoLuong()) {
-                        Log.d("AAAA", sachNhap.getSoLuong() + " : " + Integer.parseInt(tempSoLuong));
+                       // Log.d("AAAA", sachNhap.getSoLuong() + " : " + Integer.parseInt(tempSoLuong));
                         snapshot.getRef().child(soLuong).setValue(sachNhap.getSoLuong() + Integer.parseInt(tempSoLuong));
                     }
                     if (kiemTraTheLoai()) {

@@ -40,7 +40,7 @@
         android:layout_toLeftOf="@+id/tv_recycler_soluong"
         android:layout_toRightOf="@+id/img_adpater_Title"
         android:text="Mã sách"
-        android:textAlignment="viewStart" />
+       />
 
     <TextView
         android:id="@+id/tv_recycler_soluong"

@@ -1,10 +1,10 @@
 package com.hieptran.quanlythuvien.QuanTriVien.NhapSach.Adapter_nhapsach;
 
 import android.content.Context;
-import android.support.v7.widget.RecyclerView;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.BaseAdapter;
 import android.widget.ImageView;
 import android.widget.TextView;
 
@@ -19,58 +19,57 @@ import java.util.ArrayList;
  * Created by Hiep Tran on 5/3/2017.
  */
 
-public class Adapter_DanhSach extends RecyclerView.Adapter<Adapter_DanhSach.viewHolder> {
+public class Adapter_DanhSach extends BaseAdapter {
     private ArrayList<SachNhap> sachNhapList;
+    Context context;
+    int layout;
 
-    public Adapter_DanhSach(ArrayList<SachNhap> sachNhapList, Context context) {
+    public Adapter_DanhSach(ArrayList<SachNhap> sachNhapList, Context context, int layout) {
         this.sachNhapList = sachNhapList;
         this.context = context;
-    }
-
-    Context context;
-
-    @Override
-    public viewHolder onCreateViewHolder(ViewGroup parent, int viewType) {
-        LayoutInflater layoutInflater = LayoutInflater.from(parent.getContext());
-        View view = layoutInflater.inflate(R.layout.adapter_recyclerview, parent, false);
-        return new viewHolder(view);
-    }
-
-
-    @Override
-
-    public void onBindViewHolder(viewHolder holder, int position) {
-        holder.tv_tenSach.setText(sachNhapList.get(position).getTenSach());
-        holder.tv_Masach.setText(sachNhapList.get(position).getMaSach());
-        holder.tv_SoLuong.setText(sachNhapList.get(position).getSoLuong() + "");
-
-        ColorGenerator generator = ColorGenerator.MATERIAL; // set icon font
-        int color = generator.getColor(sachNhapList.get(position).getTenSach());
-
-
-        String a = sachNhapList.get(position).getTenSach().substring(0,1).toUpperCase();
-        TextDrawable textDrawable = TextDrawable.builder().buildRound(a, color);
-        holder.imgTitle.setImageDrawable(textDrawable);
-
+        this.layout = layout;
     }
 
     @Override
-    public int getItemCount() {
+    public int getCount() {
         return sachNhapList.size();
     }
 
-    public class viewHolder extends RecyclerView.ViewHolder {
-
-        TextView tv_Masach, tv_tenSach, tv_SoLuong;
-        ImageView imgTitle;
-
-        public viewHolder(View itemView) {
-
-            super(itemView);
-            tv_Masach = (TextView) itemView.findViewById(R.id.tv_recycler_MaSach);
-            tv_SoLuong = (TextView) itemView.findViewById(R.id.tv_recycler_soluong);
-            tv_tenSach = (TextView) itemView.findViewById(R.id.tv_recycler_tensach);
-            imgTitle = (ImageView) itemView.findViewById(R.id.img_adpater_Title);
-        }
+    @Override
+    public Object getItem(int position) {
+        return null;
     }
+
+    @Override
+    public long getItemId(int position) {
+        return 0;
+    }
+
+    @Override
+    public View getView(int position, View convertView, ViewGroup parent) {
+        LayoutInflater inflater = (LayoutInflater) context.getSystemService(Context.LAYOUT_INFLATER_SERVICE);
+        convertView = inflater.inflate(R.layout.adapter_recyclerview, null);
+        AnhXa(convertView);
+        tv_Masach.setText(sachNhapList.get(position).getMaSach());
+        tv_SoLuong.setText(sachNhapList.get(position).getSoLuong() + "");
+        tv_tenSach.setText(sachNhapList.get(position).getTenSach());
+
+        ColorGenerator generator = ColorGenerator.MATERIAL;
+        int color = generator.getRandomColor();
+        TextDrawable textDrawable = TextDrawable.builder().buildRound(tv_tenSach.getText().toString().substring(0, 1).toLowerCase(), color);
+        imgTitle.setImageDrawable(textDrawable);
+        return convertView;
+    }
+
+    TextView tv_Masach, tv_tenSach, tv_SoLuong;
+    ImageView imgTitle;
+
+    private void AnhXa(View itemView) {
+        tv_Masach = (TextView) itemView.findViewById(R.id.tv_recycler_MaSach);
+        tv_SoLuong = (TextView) itemView.findViewById(R.id.tv_recycler_soluong);
+        tv_tenSach = (TextView) itemView.findViewById(R.id.tv_recycler_tensach);
+        imgTitle = (ImageView) itemView.findViewById(R.id.img_adpater_Title);
+    }
+
+
 }
