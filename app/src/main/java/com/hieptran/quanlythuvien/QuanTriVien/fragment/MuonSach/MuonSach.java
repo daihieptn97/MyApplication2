@@ -42,7 +42,7 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class MuonSach extends Fragment {
-    private  String key_KhoMuonSach = "KhoMuonSach", key_KhoSach =  "KhoSach", key_MaSach = "maSach", soLuong = "soLuong";
+    private String key_KhoMuonSach = "KhoMuonSach", key_KhoSach = "KhoSach", key_MaSach = "maSach", soLuong = "soLuong";
     private ImageButton imgMaSach, imgMaDocGia;
     private AutoCompleteTextView autoMaSach, autoMaDocGia;
     private TextView tvNgayMuon, tvNgayTra;
@@ -51,7 +51,7 @@ public class MuonSach extends Fragment {
     private List<String> listMaDG, listMaSach;
     private int cout = 0;
     private AVLoadingIndicatorView progressBar;
-    private  String tempMaSach;
+    private String tempMaSach;
 
     @Nullable
     @Override
@@ -96,6 +96,8 @@ public class MuonSach extends Fragment {
     private void doneUpLoad() {
         if (autoMaDocGia.length() > 0 && autoMaSach.length() > 0) {
             SachMuon sachMuon = new SachMuon();
+            sachMuon.setHienTrangMuon(true);
+            sachMuon.setMaMuonSach(autoMaDocGia.getText().toString() + autoMaSach.getText().toString());
             sachMuon.setMaDocGia(autoMaDocGia.getText().toString());
             sachMuon.setMaSach(autoMaSach.getText().toString());
             sachMuon.setNgayMuon(getDateMuon());
@@ -112,13 +114,13 @@ public class MuonSach extends Fragment {
         }
     }
 
-    private void truSoLuongSach(){
+    private void truSoLuongSach() {
         Query query = databaseReference.child(key_KhoSach).orderByChild(key_MaSach).equalTo(tempMaSach);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
 
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()){
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     SachNhap sachNhap = snapshot.getValue(SachNhap.class);
                     snapshot.getRef().child(soLuong).setValue(sachNhap.getSoLuong() - 1);
 

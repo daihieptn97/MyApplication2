@@ -5,7 +5,32 @@ package com.hieptran.quanlythuvien.QuanTriVien.fragment.MuonSach;
  */
 
 public class SachMuon {
-    private String maSach, maDocGia, ngayMuon, ngayTra;
+    private String maSach;
+    private String maDocGia;
+    private String ngayMuon;
+    private String ngayTra;
+
+
+
+    private boolean hienTrangMuon;
+
+    public boolean isHienTrangMuon() {
+        return hienTrangMuon;
+    }
+
+    public void setHienTrangMuon(boolean hienTrangMuon) {
+        this.hienTrangMuon = hienTrangMuon;
+    }
+
+    public String getMaMuonSach() {
+        return maMuonSach;
+    }
+
+    public void setMaMuonSach(String maMuonSach) {
+        this.maMuonSach = maMuonSach;
+    }
+
+    private String maMuonSach;
 
     public String getMaSach() {
         return maSach;

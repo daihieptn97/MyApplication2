@@ -10,6 +10,7 @@ import android.widget.TextView;
 
 import com.amulyakhare.textdrawable.TextDrawable;
 import com.amulyakhare.textdrawable.util.ColorGenerator;
+import com.google.firebase.database.DatabaseReference;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.SachNhap;
 import com.hieptran.quanlythuvien.R;
 
@@ -60,6 +61,7 @@ public class Adapter_DanhSach extends BaseAdapter {
         imgTitle.setImageDrawable(textDrawable);
         return convertView;
     }
+
 
     TextView tv_Masach, tv_tenSach, tv_SoLuong;
     ImageView imgTitle;

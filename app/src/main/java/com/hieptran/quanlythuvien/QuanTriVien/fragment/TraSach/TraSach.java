@@ -3,9 +3,11 @@ package com.hieptran.quanlythuvien.QuanTriVien.fragment.TraSach;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
 import android.widget.ImageButton;
@@ -16,7 +18,9 @@ import com.google.firebase.database.DataSnapshot;
 import com.google.firebase.database.DatabaseError;
 import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
+import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.SachNhap;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.MuonSach.SachMuon;
 import com.hieptran.quanlythuvien.R;
 
@@ -30,7 +34,7 @@ import es.dmoral.toasty.Toasty;
  */
 
 public class TraSach extends Fragment {
-    private String key_KhoMuonSach = "KhoMuonSach", key_KhoSach = "KhoSach", key_MaSach = "maSach", soLuong = "soLuong";
+    private String key_KhoMuonSach = "KhoMuonSach", key_MaMuonSach = "maMuonSach", key_hienTrangMuon = "hienTrangMuon", key_soLuong = "soLuong";
     private AutoCompleteTextView autoMaDG, autoMaSach;
     private ImageButton imgMaDG, imgMaSach;
     private Button btn_Done;
@@ -44,19 +48,27 @@ public class TraSach extends Fragment {
         View view = inflater.inflate(R.layout.trasach, container, false);
         AnhXa(view);
 
+        KiemTraTrung();
         btn_Done.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
                 if (kiemTraDoDaiMa()) {
                     maSach = autoMaSach.getText().toString().trim();
                     maDG = autoMaDG.getText().toString().trim();
-                    KiemTraTrung();
+
+                    for (int positon = 0; positon < listMaSach.size(); positon++) {
+                        //  Log.d("AAAA", listMaSach.get(positon) + " : " + (maSach));
+                        if (listMaSach.get(positon).equals(maSach) && listMaDG.get(positon).equals(maDG)) {
+
+                            mDone(maSach, maDG);
+                            // Toasty.warning(getContext(), "Mã này  tồn tại trong kho", Toast.LENGTH_SHORT).show();
+                        }
+                    }
                 }
             }
         });
         return view;
     }
-
 
 
     private void KiemTraTrung() {
@@ -90,17 +102,14 @@ public class TraSach extends Fragment {
             }
         });
 
-        mDatabse.child(key_KhoMuonSach).addListenerForSingleValueEvent(new ValueEventListener() {
+        mDatabse.child(key_KhoMuonSach).addListenerForSingleValueEvent(new ValueEventListener() { // kiểm tra xem mã có trong kho hay không nếu có thì xóa
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 Toasty.success(getContext(), "Tải xong dữ liệu", Toast.LENGTH_SHORT).show();
-                int count = listMaSach.size();
-                for (int positon = 0; positon < listMaSach.size(); positon++) {
-                    if (listMaSach.get(positon).equals(maSach) && listMaDG.get(positon).equals(maDG)){
-                        mDone(maSach, maDG);
-                       // Toasty.warning(getContext(), "Mã này chưa tồn tại trong kho", Toast.LENGTH_SHORT).show();
-                    }
-                }
+                autoMaSach.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, listMaSach));
+                autoMaDG.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, listMaDG));
+                autoMaDG.setThreshold(1);
+                autoMaSach.setThreshold(1);
 
             }
 
@@ -111,8 +120,41 @@ public class TraSach extends Fragment {
         });
     }
 
-    private void mDone(String maSach, String maDG) {
+    private String keyKhoSach = "KhoSach", keyMaSach = "maSach";
 
+    private void mDone(final String maSach, final String maDG) {
+
+        Query query = mDatabse.child(key_KhoMuonSach).orderByChild(key_MaMuonSach).equalTo(maDG + maSach);
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) { // gan hien trang la da tra
+                    snapshot.getRef().child(key_hienTrangMuon).setValue(false);
+                }
+
+                Query query1 = mDatabse.child(keyKhoSach).orderByChild(keyMaSach).equalTo(maSach); //tra lai sach vao kho
+                query1.addListenerForSingleValueEvent(new ValueEventListener() {
+                    @Override
+                    public void onDataChange(DataSnapshot dataSnapshot) {
+                        for (DataSnapshot snapshot :dataSnapshot.getChildren()){
+                            SachNhap sachNhap = snapshot.getValue(SachNhap.class);
+                            Log.d("aaaa", sachNhap.getSoLuong() + 1 + "");
+                            snapshot.getRef().child(key_soLuong).setValue(sachNhap.getSoLuong() + 1);
+                        }
+                    }
+
+                    @Override
+                    public void onCancelled(DatabaseError databaseError) {
+
+                    }
+                });
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
 
