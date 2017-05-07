@@ -1,4 +1,4 @@
-package com.hieptran.quanlythuvien.TongQ;
+package com.hieptran.quanlythuvien.DocGia.thongtin;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -10,15 +10,15 @@ import android.view.ViewGroup;
 import com.hieptran.quanlythuvien.R;
 
 /**
- * Created by Hiep Tran on 4/23/2017.
+ * Created by hieptran on 5/7/2017.
  */
 
-public class ThongTin extends Fragment {
+public class ThongtinTaiKhoan extends Fragment {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.thongtin, container, false);
-        getActivity().setTitle("Thông tin");
+        View view = inflater.inflate(R.layout.thongtintaikhoan_docgia, container, false);
         return view;
     }
 }
+

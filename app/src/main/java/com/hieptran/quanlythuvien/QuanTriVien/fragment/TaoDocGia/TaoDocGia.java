@@ -132,7 +132,7 @@ public class TaoDocGia extends Fragment {
                 edTenDangNhap.setText("");
                 progressbar.setVisibility(View.GONE);
                 Toasty.success(getContext(), "Tạo Thành Công", Toast.LENGTH_SHORT).show();
-            } else {
+            } else { // kiem tra quan ly nhao lai lan 2 co dung mat khau hay khong, hay noi cach khac la can chac chan nhap mat khau cho sinh vien la dung
                 edMatKHau.setError("");
                 edNhapLaiMatKhau.setError("");
                 progressbar.setVisibility(View.GONE);
@@ -226,7 +226,6 @@ public class TaoDocGia extends Fragment {
         } else {
             Toasty.warning(getContext(), "Mật khẩu cần hơn 5 ký tư", Toast.LENGTH_SHORT).show();
             return true;
-
         }
     }
 
@@ -263,7 +262,6 @@ public class TaoDocGia extends Fragment {
     }
 
     private void anhXa(View view) {
-
         mDatabase = FirebaseDatabase.getInstance().getReference();
 
         progressbar = (AVLoadingIndicatorView) view.findViewById(R.id.processTaoTaiKHoan);
@@ -278,7 +276,5 @@ public class TaoDocGia extends Fragment {
         edTenDangNhap = (EditText) view.findViewById(R.id.ed_DG_tenDangNhap);
         edMatKHau = (EditText) view.findViewById(R.id.ed_DG_MatKhau);
         edNhapLaiMatKhau = (EditText) view.findViewById(R.id.ed_DG_NhapLaiMatKhau);
-
-
     }
 }

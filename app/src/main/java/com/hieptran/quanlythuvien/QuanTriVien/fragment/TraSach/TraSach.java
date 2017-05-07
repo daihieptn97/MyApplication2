@@ -1,5 +1,7 @@
 package com.hieptran.quanlythuvien.QuanTriVien.fragment.TraSach;
 
+import android.app.Activity;
+import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
@@ -21,6 +23,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.SachNhap;
+import com.hieptran.quanlythuvien.QuanTriVien.Scan;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.MuonSach.SachMuon;
 import com.hieptran.quanlythuvien.R;
 
@@ -62,16 +65,43 @@ public class TraSach extends Fragment {
 
                             mDone(maSach, maDG);
                             // Toasty.warning(getContext(), "Mã này  tồn tại trong kho", Toast.LENGTH_SHORT).show();
-                        }else {
+                        } else {
                             Toasty.error(getContext(), "Mã sách hoặc mã đọc giả chưa đúng", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
             }
         });
+
+        imgMaSach.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Scan.class);
+                startActivityForResult(intent, 0);
+            }
+        });
+        imgMaDG.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                Intent intent = new Intent(getActivity(), Scan.class);
+                startActivityForResult(intent, 1);
+            }
+        });
         return view;
     }
 
+    @Override
+    public void onActivityResult(int requestCode, int resultCode, Intent data) {
+        super.onActivityResult(requestCode, resultCode, data);
+        if (requestCode == 0 && resultCode == Activity.RESULT_OK && data != null) {
+            String ma = data.getStringExtra(Scan.MA_THE);
+            autoMaSach.setText(ma);
+        }
+        if (requestCode == 1 && resultCode == Activity.RESULT_OK && data != null) {
+            String maDG = data.getStringExtra(Scan.MA_THE);
+            autoMaDG.setText(maDG);
+        }
+    }
 
     private void KiemTraTrung() {
         mDatabse.child(key_KhoMuonSach).addChildEventListener(new ChildEventListener() {
@@ -112,7 +142,6 @@ public class TraSach extends Fragment {
                 autoMaDG.setAdapter(new ArrayAdapter<String>(getContext(), android.R.layout.simple_dropdown_item_1line, listMaDG));
                 autoMaDG.setThreshold(1);
                 autoMaSach.setThreshold(1);
-
             }
 
             @Override

@@ -25,6 +25,7 @@ import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
 import com.hieptran.quanlythuvien.Database.Account;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
+import com.hieptran.quanlythuvien.DocGia.MainDocGia;
 import com.hieptran.quanlythuvien.QuanTriVien.MainActivity;
 import com.wang.avi.AVLoadingIndicatorView;
 
@@ -55,7 +56,8 @@ public class Login extends AppCompatActivity {
                 if (isInternetAvailable()) {
                     if (ed_Email.length() > 0 && ed_password.length() > 0) {
                         if (check_DocGia.isChecked()) {
-                            Toasty.info(Login.this, "Đang Cập Nhập", Toast.LENGTH_SHORT).show();
+                            Intent intent = new Intent(Login.this, MainDocGia.class); // dang demoF
+                            startActivity(intent);
                         } else {
 
                             progressBar.setVisibility(View.VISIBLE);

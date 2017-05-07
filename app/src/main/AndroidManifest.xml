@@ -33,6 +33,10 @@
         <activity
             android:name=".QuanTriVien.NhapSach.NhapSach_main"
             android:label="@string/title_activity_nhap_sach_main"
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity
+            android:name=".DocGia.MainDocGia"
+            android:label="@string/title_activity_main_doc_gia"
             android:theme="@style/AppTheme.NoActionBar"></activity>
     </application>
 

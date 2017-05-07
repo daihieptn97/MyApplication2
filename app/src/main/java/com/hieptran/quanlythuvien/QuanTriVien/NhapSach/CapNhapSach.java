@@ -106,9 +106,14 @@ public class CapNhapSach extends Fragment {
                     if (kiemTraSoLuong()) {
                        // Log.d("AAAA", sachNhap.getSoLuong() + " : " + Integer.parseInt(tempSoLuong));
                         snapshot.getRef().child(soLuong).setValue(sachNhap.getSoLuong() + Integer.parseInt(tempSoLuong));
+                        edSoLuong.setText("");
+                        edMaSach.setText("");
                     }
                     if (kiemTraTheLoai()) {
+                        edTheLoai.setText("");
+                        edMaSach.setText("");
                         snapshot.getRef().child(key_TheLoai).setValue(tempTheLoai);
+
                     }
 
                 }
