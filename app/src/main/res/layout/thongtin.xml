@@ -9,7 +9,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:layout_centerHorizontal="false"
-        android:background="#052a97"
+        android:background="@color/color_nav_header"
         android:gravity="center"
         android:orientation="vertical">
 
@@ -18,7 +18,7 @@
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_weight="1"
-            app:srcCompat="@drawable/common_google_signin_btn_icon_dark" />
+            app:srcCompat="@drawable/usergroup_50px" />
 
         <TextView android:gravity="center"
             android:id="@+id/textView"
@@ -35,14 +35,14 @@
             android:layout_height="wrap_content"
             android:text="Phiên bản  : 1.0"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
 
         <TextView
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:text="Được phát triển bởi nhóm 1"
             android:textColor="#ffffff"
-            android:textSize="20dp" />
+            android:textSize="18dp" />
     </LinearLayout>
 
 </RelativeLayout>

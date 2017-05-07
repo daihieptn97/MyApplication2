@@ -3,29 +3,38 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     android:layout_width="match_parent"
     android:layout_height="@dimen/nav_header_height"
-
+    android:background="@color/color_nav_header"
     android:gravity="bottom"
     android:orientation="vertical"
     android:paddingBottom="@dimen/activity_vertical_margin"
     android:paddingLeft="@dimen/activity_horizontal_margin"
     android:paddingRight="@dimen/activity_horizontal_margin"
-    android:background="#fc2000ac"
     android:paddingTop="@dimen/activity_vertical_margin"
     android:theme="@style/ThemeOverlay.AppCompat.Dark">
 
 
-    <TextView android:textStyle="italic"
+    <ImageView
+        android:id="@+id/imageView4"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_margin="10dp"
+        android:layout_marginTop="0dp"
+        android:background="@drawable/background_tronvienngoi"
+        app:srcCompat="@drawable/user_50px_1" />
+
+    <TextView
         android:id="@+id/tv_naviga_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:text="android.studio@android.com"
-        android:textSize="18sp" />
+        android:textSize="15sp"
+         />
 
     <TextView
         android:id="@+id/tv_naviga_Name"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingTop="@dimen/nav_header_vertical_spacing"
+        android:layout_marginTop="0dp"
         android:text="Nhân Viên quản Lý"
         android:textAppearance="@style/TextAppearance.AppCompat.Body1"
         android:textSize="18sp"

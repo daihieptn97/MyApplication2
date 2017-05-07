@@ -62,6 +62,8 @@ public class TraSach extends Fragment {
 
                             mDone(maSach, maDG);
                             // Toasty.warning(getContext(), "Mã này  tồn tại trong kho", Toast.LENGTH_SHORT).show();
+                        }else {
+                            Toasty.error(getContext(), "Mã sách hoặc mã đọc giả chưa đúng", Toast.LENGTH_SHORT).show();
                         }
                     }
                 }
@@ -136,10 +138,13 @@ public class TraSach extends Fragment {
                 query1.addListenerForSingleValueEvent(new ValueEventListener() {
                     @Override
                     public void onDataChange(DataSnapshot dataSnapshot) {
-                        for (DataSnapshot snapshot :dataSnapshot.getChildren()){
+                        for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                             SachNhap sachNhap = snapshot.getValue(SachNhap.class);
-                            Log.d("aaaa", sachNhap.getSoLuong() + 1 + "");
+                            //Log.d("aaaa", sachNhap.getSoLuong() + 1 + "");
                             snapshot.getRef().child(key_soLuong).setValue(sachNhap.getSoLuong() + 1);
+                            Toasty.success(getContext(), "Hoàn Thành trả sách", Toast.LENGTH_SHORT).show();
+                            autoMaSach.setText("");
+                            autoMaDG.setText("");
                         }
                     }
 

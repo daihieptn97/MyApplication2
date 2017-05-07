@@ -1,9 +1,16 @@
 package com.hieptran.quanlythuvien;
 
+import android.*;
+import android.Manifest;
+import android.app.Activity;
 import android.content.Intent;
+import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
+import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
+import android.support.v4.app.ActivityCompat;
+import android.support.v4.content.pm.ActivityInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -39,7 +46,7 @@ public class Login extends AppCompatActivity {
         setContentView(R.layout.activity_login);
         anhXa();
         khoiChay();
-
+        initPermission();
 
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -66,6 +73,35 @@ public class Login extends AppCompatActivity {
         });
 
 
+    }
+
+    @Override
+    public void onRequestPermissionsResult(int requestCode, @NonNull String[] permissions, @NonNull int[] grantResults) {
+        if (requestCode == 1) {
+            if (grantResults.length == 1 && grantResults[0] == PackageManager.PERMISSION_GRANTED) {
+                Toast.makeText(Login.this, "Permision ok", Toast.LENGTH_SHORT).show();
+            } else {
+                Toast.makeText(Login.this, "Permision chua duoc cap", Toast.LENGTH_SHORT).show();
+            }
+        } else {
+            super.onRequestPermissionsResult(requestCode, permissions, grantResults);
+        }
+
+    }
+
+    private void initPermission() {
+        if (Build.VERSION.SDK_INT >= Build.VERSION_CODES.M) {
+            if (checkSelfPermission(Manifest.permission.CAMERA) != PackageManager.PERMISSION_GRANTED) {
+                if (shouldShowRequestPermissionRationale(Manifest.permission.CAMERA) &&
+                        shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_WIFI_STATE) &&
+                        shouldShowRequestPermissionRationale(Manifest.permission.ACCESS_NETWORK_STATE)) {
+                    Toasty.error(Login.this, "Quyền chưa được cấp ", Toast.LENGTH_SHORT).show();
+                } else {
+                    requestPermissions(new String[]{Manifest.permission.CAMERA,
+                            Manifest.permission.ACCESS_NETWORK_STATE, Manifest.permission.ACCESS_WIFI_STATE}, 3);
+                }
+            }
+        }
     }
 
 
@@ -111,7 +147,6 @@ public class Login extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null &&
                 cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
-
 
 
     private void dangNhap() {
