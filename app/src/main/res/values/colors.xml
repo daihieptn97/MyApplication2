@@ -7,6 +7,10 @@
     <color name="purple">#9933CC</color>
     <color name="green">#669900</color>
     <color name="orange">#FF8800</color>
+    <color name="Red">#d50000</color>
     <color name="vientron">#00600f</color>
     <color name="color_nav_header">#388e3c</color>
+    <color name="background">#e8eaf6</color>
+    <color name="chuDen">#000000</color>
+    <color name="chudenNhat">#616161</color>
 </resources>

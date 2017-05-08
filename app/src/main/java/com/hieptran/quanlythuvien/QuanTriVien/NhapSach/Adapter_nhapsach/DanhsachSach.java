@@ -152,7 +152,6 @@ public class DanhsachSach extends Fragment {
                 adapter.notifyDataSetChanged();
                 progressBar.setVisibility(View.GONE);
             }
-
             @Override
             public void onCancelled(DatabaseError databaseError) {
 

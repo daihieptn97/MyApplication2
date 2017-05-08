@@ -17,4 +17,5 @@
     <string name="section_format">Hello World from section: %1$d</string>
     <string name="title_activity_nhap_sach_main">NhapSach_main</string>
     <string name="title_activity_main_doc_gia">Đọc giả</string>
+
 </resources>

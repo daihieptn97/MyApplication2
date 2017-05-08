@@ -1,4 +1,4 @@
-package com.hieptran.quanlythuvien.DocGia.TraSach;
+package com.hieptran.quanlythuvien.DocGia;
 
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -13,11 +13,11 @@ import com.hieptran.quanlythuvien.R;
  * Created by hieptran on 5/7/2017.
  */
 
-public class TraCuuSach extends Fragment {
+public class ThongBao extends Fragment  {
     @Nullable
     @Override
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
-        View view = inflater.inflate(R.layout.trasach_docgia, container, false);
-        return view;
+        View view = inflater.inflate(R.layout.thongbao_docgia, container, false);
+        return  view;
     }
 }
