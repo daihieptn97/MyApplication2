@@ -32,7 +32,8 @@
                 android:layout_marginLeft="16dp"
                 android:text="Trần Đại Hiệp"
                 android:textColor="@color/background"
-                android:textSize="18dp" />
+                android:textSize="18dp"
+                android:textStyle="bold" />
         </LinearLayout>
     </LinearLayout>
 
@@ -76,12 +77,81 @@
             android:id="@+id/tv_DG_diachi"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
-            android:layout_marginLeft="16dp"
+            android:layout_marginLeft="47dp"
             android:text="Thái Nguyên "
             android:textColor="@color/chudenNhat"
             android:textSize="16dp" />
     </LinearLayout>
 
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_item_row"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Lớp : "
+            android:textColor="@color/chuDen"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tv_DG_lop"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="71dp"
+            android:text="Ktpm-k14b"
+            android:textColor="@color/chudenNhat"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_item_row"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Số điện thoại : "
+            android:textColor="@color/chuDen"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tv_DG_sdt"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="10dp"
+            android:text="01659986153"
+            android:textColor="@color/chudenNhat"
+            android:textSize="16dp" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:background="@drawable/background_item_row"
+        android:orientation="horizontal">
+
+        <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Ngày Sinh : "
+            android:textColor="@color/chuDen"
+            android:textSize="16dp" />
+
+        <TextView
+            android:id="@+id/tv_DG_NgaySinh"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginLeft="27dp"
+            android:text="12/08/1997"
+            android:textColor="@color/chudenNhat"
+            android:textSize="16dp" />
+    </LinearLayout>
 
 
 </LinearLayout>

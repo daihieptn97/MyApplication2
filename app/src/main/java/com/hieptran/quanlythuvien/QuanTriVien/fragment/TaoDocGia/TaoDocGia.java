@@ -48,7 +48,7 @@ public class TaoDocGia extends Fragment {
     private Bitmap bitmapGetData;
     private ImageButton imgScanMaDG;
     private ImageView imgAvatar;
-    private EditText edMaDG, edTenDG, edDiaChi, edSdt, edLop, edTenDangNhap, edMatKHau, edNhapLaiMatKhau;
+    private EditText edMaDG, edTenDG, edDiaChi, edSdt, edLop, edTenDangNhap, edMatKHau, edNhapLaiMatKhau, edNgaysinh, edThangSinh, edNamSinh;
     private Button btnDone;
     private DatabaseReference mDatabase;
     private List<String> listMaDG, lisTenDangNhap;
@@ -112,6 +112,8 @@ public class TaoDocGia extends Fragment {
 
                 String imgAvatar = Base64.encodeToString(getBytesFromBitmap(bitmapGetData), Base64.NO_WRAP);
                 docGia.setAvatar(imgAvatar);
+
+                docGia.setNgaySinh(edNgaysinh.getText().toString().trim() + "/" + edThangSinh.getText().toString().trim() + "/" + edNamSinh.getText().toString().trim());
                 docGia.setMaDocGia(edMaDG.getText().toString().trim());
                 docGia.setDiaChi(edDiaChi.getText().toString());
                 docGia.setLop(edLop.getText().toString());
@@ -130,6 +132,9 @@ public class TaoDocGia extends Fragment {
                 edTenDG.setText("");
                 edDiaChi.setText("");
                 edTenDangNhap.setText("");
+                edNamSinh.setText("");
+                edThangSinh.setText("");
+                edNgaysinh.setText("");
                 progressbar.setVisibility(View.GONE);
                 Toasty.success(getContext(), "Tạo Thành Công", Toast.LENGTH_SHORT).show();
             } else { // kiem tra quan ly nhao lai lan 2 co dung mat khau hay khong, hay noi cach khac la can chac chan nhap mat khau cho sinh vien la dung
@@ -138,6 +143,14 @@ public class TaoDocGia extends Fragment {
                 progressbar.setVisibility(View.GONE);
                 Toasty.warning(getContext(), "Mật khẩu chưa khớp", Toast.LENGTH_SHORT).show();
             }
+        }
+    }
+
+    private boolean kiemTraNgaySinh() {
+        if (edNamSinh.length() > 0 && edNgaysinh.length() > 0 && edThangSinh.length() > 0) {
+            return true;
+        } else {
+            return false;
         }
     }
 
@@ -201,7 +214,8 @@ public class TaoDocGia extends Fragment {
 
     private boolean checkDoDai() {
         if (edTenDangNhap.length() > 0 && edSdt.length() > 0 && edMatKHau.length() > 0 && edLop.length() > 0
-                && edNhapLaiMatKhau.length() > 0 && edDiaChi.length() > 0 && edTenDG.length() > 0 && edMaDG.length() > 0 && bitmapGetData != null) {
+                && edNhapLaiMatKhau.length() > 0 && edDiaChi.length() > 0 && edTenDG.length() > 0
+                && edMaDG.length() > 0 && bitmapGetData != null && kiemTraNgaySinh()) {
             return true;
         } else {
             Toasty.warning(getContext(), getString(R.string.wChuaDuThongTin), Toast.LENGTH_SHORT).show();
@@ -276,5 +290,8 @@ public class TaoDocGia extends Fragment {
         edTenDangNhap = (EditText) view.findViewById(R.id.ed_DG_tenDangNhap);
         edMatKHau = (EditText) view.findViewById(R.id.ed_DG_MatKhau);
         edNhapLaiMatKhau = (EditText) view.findViewById(R.id.ed_DG_NhapLaiMatKhau);
+        edNgaysinh = (EditText) view.findViewById(R.id.ed_DG_NgaySinh_ngay);
+        edThangSinh = (EditText) view.findViewById(R.id.ed_DG_NgaySinh_thang);
+        edNamSinh = (EditText) view.findViewById(R.id.ed_DG_NgaySinh_nam);
     }
 }

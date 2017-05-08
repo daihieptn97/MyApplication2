@@ -103,6 +103,52 @@
                     android:hint="Địa chỉ"
                     android:inputType="textPersonName" />
 
+                <LinearLayout
+                    android:id="@+id/line_thongtindg"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_alignLeft="@+id/ed_DG_Diachi"
+                    android:layout_alignStart="@+id/ed_DG_Diachi"
+                    android:layout_below="@id/ed_DG_Diachi"
+                    android:orientation="horizontal">
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="Ngày Sinh : "
+                        android:textColor="@color/chuDen"
+                        android:textSize="18dp" />
+
+                    <EditText
+                        android:id="@+id/ed_DG_NgaySinh_ngay"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Ngày" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/"
+                        android:textStyle="bold" />
+
+                    <EditText
+                        android:id="@+id/ed_DG_NgaySinh_thang"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Tháng" />
+
+                    <TextView
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:text="/" />
+
+                    <EditText
+                        android:id="@+id/ed_DG_NgaySinh_nam"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:hint="Năm" />
+                </LinearLayout>
+
                 <EditText
                     android:id="@+id/ed_DG_SDT"
                     android:layout_width="wrap_content"
@@ -111,7 +157,7 @@
                     android:layout_alignParentEnd="true"
                     android:layout_alignParentRight="true"
                     android:layout_alignStart="@+id/ed_DG_Diachi"
-                    android:layout_below="@+id/ed_DG_Diachi"
+                    android:layout_below="@+id/line_thongtindg"
                     android:layout_marginTop="10dp"
                     android:ems="10"
                     android:hint="Số Điện Thoại"

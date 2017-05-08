@@ -5,9 +5,18 @@ package com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia;
  */
 
 public class DocGia {
-    private String maDocGia, tenDG, diaChi, Sdt, lop, tenDangNhap, matKhau;
+    private String maDocGia, tenDG, diaChi, Sdt, lop, tenDangNhap, matKhau ;
     //private byte[] avatar;
     private String avatar;
+    private String ngaySinh;
+
+    public String getNgaySinh() {
+        return ngaySinh;
+    }
+
+    public void setNgaySinh(String ngaySinh) {
+        this.ngaySinh = ngaySinh;
+    }
 
     public DocGia() {
     }
