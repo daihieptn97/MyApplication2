@@ -38,7 +38,6 @@ public class Datbase_Account {
     }
 
     public boolean isEmpty() {
-        int n;
         Cursor cursor = databaseHelper.getReadableDatabase().rawQuery("select * from " + databaseHelper.Table_login_Name + "", null);
         cursor.moveToFirst();
         if (cursor.getCount() > 0) {

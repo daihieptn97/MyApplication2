@@ -16,6 +16,7 @@ import android.view.View;
 import android.widget.TextView;
 
 import com.google.firebase.auth.FirebaseAuth;
+import com.hieptran.quanlythuvien.Database.DataBase_KiemTra;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
 import com.hieptran.quanlythuvien.Login;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.NhapSach_main;
@@ -123,6 +124,10 @@ public class MainActivity extends AppCompatActivity
             Datbase_Account datbase_account = Datbase_Account.getDatbase_account(this);
             datbase_account.Open_Database_TaiKhoan();
             datbase_account.Delete_Account();
+
+            DataBase_KiemTra dataBase_kiemTra = DataBase_KiemTra.getDataBase_kiemTra(this);
+            dataBase_kiemTra.OpenDatabaseKiemTra();
+            dataBase_kiemTra.Delete_KiemTra();
             finish();
         } else if (id == R.id.menu_taoDgia) {
             changeFragment(new TaoDocGia());

@@ -27,12 +27,17 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
 
     public static final String Table_ThongTinDocGia_Name = "ThongTinDocGia";
+    public static final String Key_ThongTinDocGia_tenDG = "tenDG";
     public static final String Key_ThongTinDocGia_maDG = "maDocGia";
     public static final String Key_ThongTinDocGia_diaChi = "diaChi";
     public static final String Key_ThongTinDocGia_lop = "lop";
     public static final String Key_ThongTinDocGia_sdt = "sdt";
     public static final String Key_ThongTinDocGia_ngaySinh = "ngaySinh";
     public static final String Key_ThongTinDocGia_avatar = "avatar";
+
+    public static final String TableName_KiemTra = "KiemTra";
+    public static final String Key_kiemTra_DocGia = "docGia";
+    public static final String Key_kiemTra_NhoMatKhau = "nhoMatKhau";
 
 
     public DatabaseHelper(Context context) {
@@ -41,15 +46,19 @@ public class DatabaseHelper extends SQLiteOpenHelper {
 
     @Override
     public void onCreate(SQLiteDatabase db) {
+
+        db.execSQL("CREATE  TABLE \"main\".\"KiemTra\" (\"nhoMatKhau\" INTEGER PRIMARY KEY  NOT NULL , \"docGia\" INTEGER)");
+
         db.execSQL("CREATE  TABLE \"main\".\"Account\" (\"id\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ," +
                 " \"email\" TEXT NOT NULL , \"password\" TEXT NOT NULL )");
 
-        db.execSQL("CREATE TABLE \"main\".\"ThongTinDocGia\" (\"maDocGia\" TEXT PRIMARY KEY  NOT NULL , " +
-                "\"diaChi\" TEXT, \"lop\" TEXT, \"sdt\" TEXT, \"ngaySinh\" TEXT, \"avatar\" TEXT)");
+        db.execSQL("CREATE  TABLE \"main\".\"ThongTinDocGia\" (\"maDocGia\" TEXT PRIMARY KEY  NOT NULL , " +
+                "\"tenDG\" TEXT, \"diaChi\" TEXT, \"lop\" TEXT, \"sdt\" TEXT, \"ngaySinh\" TEXT, \"avatar\" TEXT)");
+
+
     }
 
     @Override
     public void onUpgrade(SQLiteDatabase db, int oldVersion, int newVersion) {
-
     }
 }

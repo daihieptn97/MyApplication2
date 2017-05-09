@@ -1,16 +1,12 @@
 package com.hieptran.quanlythuvien;
 
-import android.*;
 import android.Manifest;
-import android.app.Activity;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.NonNull;
-import android.support.v4.app.ActivityCompat;
-import android.support.v4.content.pm.ActivityInfoCompat;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
@@ -29,7 +25,9 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.Database.Account;
+import com.hieptran.quanlythuvien.Database.DataBase_KiemTra;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
+import com.hieptran.quanlythuvien.Database.KiemTra;
 import com.hieptran.quanlythuvien.DocGia.MainDocGia;
 import com.hieptran.quanlythuvien.QuanTriVien.MainActivity;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia.DocGia;
@@ -46,6 +44,7 @@ public class Login extends AppCompatActivity {
     private AVLoadingIndicatorView progressBar;
 
     private ViewGroup layoutLoginContent;
+    private DataBase_KiemTra dataBase_kiemTra;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -58,8 +57,6 @@ public class Login extends AppCompatActivity {
         btnDangNhap.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
-
-
                 if (isInternetAvailable()) {
                     progressBar.setVisibility(View.VISIBLE);
                     progressBar.show();
@@ -105,6 +102,13 @@ public class Login extends AppCompatActivity {
                             }
                         }
                         ok = false;
+
+                        if (check_NhoMatKhau.isChecked()) {
+                            KiemTra kiemTra = new KiemTra();
+                            kiemTra.setDocGia(1);
+                            kiemTra.setNhoMatKhau(1);
+                            dataBase_kiemTra.InsertDatbaseKiemTra(kiemTra);
+                        }
                         Intent intent = new Intent(Login.this, MainDocGia.class);
                         intent.putExtra("email", ed_Email.getText().toString());
                         startActivity(intent);
@@ -160,16 +164,30 @@ public class Login extends AppCompatActivity {
             Account account = datbase_account.LoadAccount();
             ed_password.setText(account.getPassword());
             ed_Email.setText(account.getMail());
-            check_NhoMatKhau.setChecked(true);
-            check_DocGia.setChecked(true);
         }
 
+        dataBase_kiemTra = DataBase_KiemTra.getDataBase_kiemTra(this);
+        dataBase_kiemTra.OpenDatabaseKiemTra();
+
+      //  try {
+
+            if (!dataBase_kiemTra.isEmpty()) {
+                KiemTra kiemTra = dataBase_kiemTra.loadTTKiemTra();
+                if (kiemTra.getDocGia() == 1) check_DocGia.setChecked(true);
+                if (kiemTra.getNhoMatKhau() == 1) check_NhoMatKhau.setChecked(true);
+                if (kiemTra.getDocGia() == 0) check_NhoMatKhau.setChecked(false);
+                if (kiemTra.getNhoMatKhau() == 0) check_DocGia.setChecked(false);
+            }
+//        }catch (Exception e){
+//
+//        }
 
         if (isInternetAvailable() && !check_DocGia.isChecked()) {
             if (ed_password.length() > 0 && ed_Email.length() > 0) {
                 progressBar.setVisibility(View.VISIBLE);
                 progressBar.show();
                 //layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
+
 
                 auth.signInWithEmailAndPassword(ed_Email.getText().toString().trim(), ed_password.getText().toString().trim()).
                         addOnCompleteListener(new OnCompleteListener<AuthResult>() {
@@ -183,6 +201,7 @@ public class Login extends AppCompatActivity {
                                     finish();
                                 } else {
                                     Toasty.error(Login.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                                    progressBar.hide();
                                 }
                             }
                         });
@@ -215,9 +234,16 @@ public class Login extends AppCompatActivity {
                                     account.setMail(ed_Email.getText().toString());
                                     account.setPassword(ed_password.getText().toString());
                                     datbase_account.Insert_Datbase_Account(account);
+
                                 }
                             }
 
+                            if (check_NhoMatKhau.isChecked()) {
+                                KiemTra kiemTra = new KiemTra();
+                                kiemTra.setDocGia(0);
+                                kiemTra.setNhoMatKhau(1);
+                                dataBase_kiemTra.InsertDatbaseKiemTra(kiemTra);
+                            }
                             Intent intent = new Intent(Login.this, MainActivity.class);
                             intent.putExtra("email", ed_Email.getText().toString());
                             startActivity(intent);
@@ -249,6 +275,8 @@ public class Login extends AppCompatActivity {
 
         datbase_account = Datbase_Account.getDatbase_account(this);
         datbase_account.Open_Database_TaiKhoan();
+
+
         auth = FirebaseAuth.getInstance();
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.process);
         check_DocGia = (CheckBox) findViewById(R.id.checkBox_sinhvien);

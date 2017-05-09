@@ -39,6 +39,7 @@ public class ThongtinTaiKhoan extends Fragment {
         View view = inflater.inflate(R.layout.thongtintaikhoan_docgia, container, false);
         anhXa(view);
         LoadData();
+
         btnSuaThongTin.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -49,40 +50,42 @@ public class ThongtinTaiKhoan extends Fragment {
         return view;
     }
 
-
     private String KEY_khosach = "KhoDocGia", keyTenDangNhap = "tenDangNhap";
-
     private String mTenDangNhap() {
         return getActivity().getIntent().getStringExtra("email");
     }
 
-    // chua hoan thanh phan thogn tin doc gia, moi add xong database
+    private void setThongTin(){
+        DocGia docGia = thongtindocgia.loadThongTinDocGia();
+        tvTen.setText(docGia.getTenDG());
+        tvNgaySinh.setText(docGia.getNgaySinh());
+        tvSdt.setText(docGia.getSdt());
+        tvDiachi.setText(docGia.getDiaChi());
+        tvMaDG.setText(docGia.getMaDocGia());
+        tvLop.setText(docGia.getLop());
+    }
 
     private void LoadData() {
+       if (thongtindocgia.isEmpty()){
+           Query query = mDataBase.child(KEY_khosach).orderByChild(keyTenDangNhap).equalTo(mTenDangNhap() + "");
+           query.addListenerForSingleValueEvent(new ValueEventListener() {
+               @Override
+               public void onDataChange(DataSnapshot dataSnapshot) {
+                   for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                       DocGia docGia = snapshot.getValue(DocGia.class);
+                       thongtindocgia.Insert_Datbase_thongtin(docGia);
+                       setThongTin();
+                   }
+               }
 
-        Log.d("aaaa", mTenDangNhap() + "");
-        Query query = mDataBase.child(KEY_khosach).orderByChild(keyTenDangNhap).equalTo(mTenDangNhap() + "");
-        query.addListenerForSingleValueEvent(new ValueEventListener() {
-            @Override
-            public void onDataChange(DataSnapshot dataSnapshot) {
-                Log.d("aaaa", dataSnapshot.getChildrenCount() + "");
-                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
-                    DocGia docGia = snapshot.getValue(DocGia.class);
-                    thongtindocgia.Insert_Datbase_thongtin(docGia);
-//                    tvTen.setText(docGia.getTenDG());
-//                    tvNgaySinh.setText(docGia.getNgaySinh());
-//                    tvSdt.setText(docGia.getSdt());
-//                    tvDiachi.setText(docGia.getDiaChi());
-//                    tvMaDG.setText(docGia.getMaDocGia());
-//                    tvLop.setText(docGia.getLop());
-                }
-            }
+               @Override
+               public void onCancelled(DatabaseError databaseError) {
 
-            @Override
-            public void onCancelled(DatabaseError databaseError) {
-
-            }
-        });
+               }
+           });
+       }else {
+           setThongTin();
+       }
     }
 
     private void anhXa(View view) {

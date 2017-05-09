@@ -43,7 +43,7 @@ public class MainDocGia extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addList("Tra Cứu sách", new TraCuuSach());
-        mSectionsPagerAdapter.addList("Thông Báo", new ThongBao());
+        mSectionsPagerAdapter.addList("Sách Mượn", new ThongBao());
         mSectionsPagerAdapter.addList("Thông tin tài khoản", new ThongtinTaiKhoan());
 
         // Set up the ViewPager with the sections adapter.

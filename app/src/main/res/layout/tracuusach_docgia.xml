@@ -9,7 +9,6 @@
         android:id="@+id/tv_tracuusach_hethanmuon"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:background="@color/color_nav_header"
         android:textColor="@color/Red"
         android:textSize="18dp" />
 
