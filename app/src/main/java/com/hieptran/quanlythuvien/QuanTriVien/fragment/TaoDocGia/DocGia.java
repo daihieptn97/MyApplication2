@@ -6,7 +6,7 @@ package com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia;
 
 public class DocGia {
     private String maDocGia, tenDG, diaChi, Sdt, lop, tenDangNhap, matKhau ;
-    //private byte[] avatar;
+
     private String avatar;
     private String ngaySinh;
 

@@ -37,7 +37,8 @@
         <activity
             android:name=".DocGia.MainDocGia"
             android:label="@string/title_activity_main_doc_gia"
-            android:theme="@style/AppTheme.NoActionBar"></activity>
+            android:theme="@style/AppTheme.NoActionBar" />
+        <activity android:name=".DocGia.thongtin.SuaThongTin"></activity>
     </application>
 
 </manifest>

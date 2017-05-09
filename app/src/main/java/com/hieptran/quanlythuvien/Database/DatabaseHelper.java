@@ -25,6 +25,16 @@ public class DatabaseHelper extends SQLiteOpenHelper {
     public static final String Key_login_Email = "email";
     public static final String Key_login_Password = "password";
 
+
+    public static final String Table_ThongTinDocGia_Name = "ThongTinDocGia";
+    public static final String Key_ThongTinDocGia_maDG = "maDocGia";
+    public static final String Key_ThongTinDocGia_diaChi = "diaChi";
+    public static final String Key_ThongTinDocGia_lop = "lop";
+    public static final String Key_ThongTinDocGia_sdt = "sdt";
+    public static final String Key_ThongTinDocGia_ngaySinh = "ngaySinh";
+    public static final String Key_ThongTinDocGia_avatar = "avatar";
+
+
     public DatabaseHelper(Context context) {
         super(context, Datbse_Name, null, version);
     }
@@ -34,6 +44,8 @@ public class DatabaseHelper extends SQLiteOpenHelper {
         db.execSQL("CREATE  TABLE \"main\".\"Account\" (\"id\" INTEGER PRIMARY KEY  AUTOINCREMENT  NOT NULL ," +
                 " \"email\" TEXT NOT NULL , \"password\" TEXT NOT NULL )");
 
+        db.execSQL("CREATE TABLE \"main\".\"ThongTinDocGia\" (\"maDocGia\" TEXT PRIMARY KEY  NOT NULL , " +
+                "\"diaChi\" TEXT, \"lop\" TEXT, \"sdt\" TEXT, \"ngaySinh\" TEXT, \"avatar\" TEXT)");
     }
 
     @Override

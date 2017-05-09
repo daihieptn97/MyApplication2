@@ -23,10 +23,16 @@ import com.google.android.gms.tasks.OnCompleteListener;
 import com.google.android.gms.tasks.Task;
 import com.google.firebase.auth.AuthResult;
 import com.google.firebase.auth.FirebaseAuth;
+import com.google.firebase.database.DataSnapshot;
+import com.google.firebase.database.DatabaseError;
+import com.google.firebase.database.DatabaseReference;
+import com.google.firebase.database.FirebaseDatabase;
+import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.Database.Account;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
 import com.hieptran.quanlythuvien.DocGia.MainDocGia;
 import com.hieptran.quanlythuvien.QuanTriVien.MainActivity;
+import com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia.DocGia;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import es.dmoral.toasty.Toasty;
@@ -53,28 +59,70 @@ public class Login extends AppCompatActivity {
             @Override
             public void onClick(View v) {
 
+
                 if (isInternetAvailable()) {
+                    progressBar.setVisibility(View.VISIBLE);
+                    progressBar.show();
                     if (ed_Email.length() > 0 && ed_password.length() > 0) {
                         if (check_DocGia.isChecked()) {
-                            Intent intent = new Intent(Login.this, MainDocGia.class); // dang demoF
-                            startActivity(intent);
+                            dangNhapDocGia();
                         } else {
-
-                            progressBar.setVisibility(View.VISIBLE);
-                            progressBar.show();
                             //layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
-                            dangNhap();
+                            dangNhap(); // dang nhap cua quan tri vien
                         }
                     } else {
                         Toasty.warning(Login.this, "Bạn Hãy Nhập Đủ Thông Tin", Toast.LENGTH_SHORT).show();
+                        progressBar.hide();
                     }
                 } else {
                     Toasty.error(Login.this, "Không có Kết Nối internet", Toast.LENGTH_SHORT).show();
+                    progressBar.hide();
                 }
             }
         });
 
 
+    }
+
+    private DatabaseReference mDatabase;
+    private boolean ok = true;
+
+    private void dangNhapDocGia() {
+        mDatabase = FirebaseDatabase.getInstance().getReference();
+        mDatabase.child("KhoDocGia").addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+
+                for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
+                    DocGia docGia = snapshot.getValue(DocGia.class);
+                    if (docGia.getTenDangNhap().equals(ed_Email.getText().toString().trim()) && docGia.getMatKhau().equals(ed_password.getText().toString().trim())) {
+                        if (check_NhoMatKhau.isChecked()) { // neu muon luu mat khua thi moi luu
+                            if (!datbase_account.isExits(ed_Email.getText().toString())) { // kiem tra email da ton tai trong databse chua, chua thi luu lai, con co roi thi thoi
+                                Account account = new Account();
+                                account.setMail(ed_Email.getText().toString());
+                                account.setPassword(ed_password.getText().toString());
+                                datbase_account.Insert_Datbase_Account(account);
+                            }
+                        }
+                        ok = false;
+                        Intent intent = new Intent(Login.this, MainDocGia.class);
+                        intent.putExtra("email", ed_Email.getText().toString());
+                        startActivity(intent);
+                        progressBar.hide();
+                        finish();
+                    }
+                }
+
+                if (ok) {
+                    Toasty.error(Login.this, "sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                    progressBar.hide();
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+            }
+        });
     }
 
     @Override
@@ -106,7 +154,6 @@ public class Login extends AppCompatActivity {
         }
     }
 
-
     private void khoiChay() {
 
         if (!datbase_account.isEmpty()) {
@@ -114,28 +161,34 @@ public class Login extends AppCompatActivity {
             ed_password.setText(account.getPassword());
             ed_Email.setText(account.getMail());
             check_NhoMatKhau.setChecked(true);
+            check_DocGia.setChecked(true);
         }
 
 
-        if (isInternetAvailable()) {
+        if (isInternetAvailable() && !check_DocGia.isChecked()) {
             if (ed_password.length() > 0 && ed_Email.length() > 0) {
                 progressBar.setVisibility(View.VISIBLE);
                 progressBar.show();
                 //layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
 
-                auth.signInWithEmailAndPassword(ed_Email.getText().toString().trim(), ed_password.getText().toString().trim()).addOnCompleteListener(new OnCompleteListener<AuthResult>() {
-                    @Override
-                    public void onComplete(@NonNull Task<AuthResult> task) {
-                        if (task.isSuccessful()) {
-                            Intent intent = new Intent(Login.this, MainActivity.class);
-                            intent.putExtra("email", ed_Email.getText().toString());
-                            startActivity(intent);
-                            progressBar.hide();
-                            finish();
-                        }
-                    }
-                });
+                auth.signInWithEmailAndPassword(ed_Email.getText().toString().trim(), ed_password.getText().toString().trim()).
+                        addOnCompleteListener(new OnCompleteListener<AuthResult>() {
+                            @Override
+                            public void onComplete(@NonNull Task<AuthResult> task) {
+                                if (task.isSuccessful()) {
+                                    Intent intent = new Intent(Login.this, MainActivity.class);
+                                    intent.putExtra("email", ed_Email.getText().toString());
+                                    startActivity(intent);
+                                    progressBar.hide();
+                                    finish();
+                                } else {
+                                    Toasty.error(Login.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
+                                }
+                            }
+                        });
             }
+        } else if (isInternetAvailable() && check_DocGia.isChecked()) {
+            dangNhapDocGia();
         } else {
             Toasty.error(Login.this, "Không có Kết Nối internet", Toast.LENGTH_SHORT).show();
         }
@@ -149,7 +202,6 @@ public class Login extends AppCompatActivity {
         return cm.getActiveNetworkInfo() != null &&
                 cm.getActiveNetworkInfo().isConnectedOrConnecting();
     }
-
 
     private void dangNhap() {
         auth.signInWithEmailAndPassword(ed_Email.getText().toString().trim(), ed_password.getText().toString().trim()).

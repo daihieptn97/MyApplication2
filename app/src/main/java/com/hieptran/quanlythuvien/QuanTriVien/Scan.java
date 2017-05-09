@@ -41,7 +41,6 @@ public class Scan extends AppCompatActivity implements ZXingScannerView.ResultHa
         finish();
     }
 
-    // Toggle flash:
 
     @Override
     public void handleResult(Result result) {
