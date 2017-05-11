@@ -71,7 +71,7 @@
                     android:layout_toRightOf="@+id/imgTaoScanMaDG"
                     android:ems="10"
                     android:hint="Mã Độc Giả"
-                    android:inputType="textPersonName" />
+                    android:inputType="textCapCharacters|textPersonName" />
 
                 <EditText
                     android:id="@+id/ed_DG_TenDG"
@@ -115,6 +115,7 @@
                     <TextView
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
+                        android:inputType="number"
                         android:text="Ngày Sinh : "
                         android:textColor="@color/chuDen"
                         android:textSize="18dp" />
@@ -123,7 +124,8 @@
                         android:id="@+id/ed_DG_NgaySinh_ngay"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Ngày" />
+                        android:hint="Ngày"
+                        android:inputType="number" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -135,7 +137,8 @@
                         android:id="@+id/ed_DG_NgaySinh_thang"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Tháng" />
+                        android:hint="Tháng"
+                        android:inputType="number" />
 
                     <TextView
                         android:layout_width="wrap_content"
@@ -146,7 +149,8 @@
                         android:id="@+id/ed_DG_NgaySinh_nam"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
-                        android:hint="Năm" />
+                        android:hint="Năm"
+                        android:inputType="number" />
                 </LinearLayout>
 
                 <EditText

@@ -21,7 +21,7 @@ public class Database_thongtindocgia {
         databaseHelper = DatabaseHelper.getDatabaseHelper(context);
     }
 
-    public static Database_thongtindocgia getDatbase_account(Context context) {
+    public static Database_thongtindocgia getDatbase_thongtindocgia(Context context) {
         if (database_thongtindocgia == null) {
             database_thongtindocgia = new Database_thongtindocgia(context);
         }

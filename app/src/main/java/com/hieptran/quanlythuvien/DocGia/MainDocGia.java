@@ -9,11 +9,7 @@ import android.support.v4.app.FragmentManager;
 import android.support.v4.app.FragmentPagerAdapter;
 import android.support.v4.view.ViewPager;
 import android.os.Bundle;
-import android.view.LayoutInflater;
 import android.view.MenuItem;
-import android.view.View;
-import android.widget.ImageView;
-import android.widget.TextView;
 
 import com.hieptran.quanlythuvien.DocGia.TraCuuSach.TraCuuSach;
 import com.hieptran.quanlythuvien.DocGia.thongtin.ThongtinTaiKhoan;
@@ -43,7 +39,7 @@ public class MainDocGia extends AppCompatActivity {
         // primary sections of the activity.
         mSectionsPagerAdapter = new SectionsPagerAdapter(getSupportFragmentManager());
         mSectionsPagerAdapter.addList("Tra Cứu sách", new TraCuuSach());
-        mSectionsPagerAdapter.addList("Sách Mượn", new ThongBao());
+        mSectionsPagerAdapter.addList("Sách Mượn", new ThongTinMuonSachDG());
         mSectionsPagerAdapter.addList("Thông tin tài khoản", new ThongtinTaiKhoan());
 
         // Set up the ViewPager with the sections adapter.

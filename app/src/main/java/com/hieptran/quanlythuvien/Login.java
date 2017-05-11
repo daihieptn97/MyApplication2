@@ -29,6 +29,7 @@ import com.hieptran.quanlythuvien.Database.DataBase_KiemTra;
 import com.hieptran.quanlythuvien.Database.Datbase_Account;
 import com.hieptran.quanlythuvien.Database.KiemTra;
 import com.hieptran.quanlythuvien.DocGia.MainDocGia;
+import com.hieptran.quanlythuvien.DocGia.ThongTinMuonSachDG;
 import com.hieptran.quanlythuvien.QuanTriVien.MainActivity;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia.DocGia;
 import com.wang.avi.AVLoadingIndicatorView;
@@ -109,8 +110,13 @@ public class Login extends AppCompatActivity {
                             kiemTra.setNhoMatKhau(1);
                             dataBase_kiemTra.InsertDatbaseKiemTra(kiemTra);
                         }
+                        Bundle bundle = new Bundle();
+
+//                        bundle.putString("email", ed_Email.getText().toString().trim());
+//                        ThongTinMuonSachDG sachDG = new ThongTinMuonSachDG();
+//                        sachDG.setArguments(bundle);
                         Intent intent = new Intent(Login.this, MainDocGia.class);
-                        intent.putExtra("email", ed_Email.getText().toString());
+                        intent.putExtra("email", ed_Email.getText().toString().trim());
                         startActivity(intent);
                         progressBar.hide();
                         finish();
@@ -275,8 +281,6 @@ public class Login extends AppCompatActivity {
 
         datbase_account = Datbase_Account.getDatbase_account(this);
         datbase_account.Open_Database_TaiKhoan();
-
-
         auth = FirebaseAuth.getInstance();
         progressBar = (AVLoadingIndicatorView) findViewById(R.id.process);
         check_DocGia = (CheckBox) findViewById(R.id.checkBox_sinhvien);
