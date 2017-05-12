@@ -44,20 +44,22 @@
 
                 <EditText
                     android:id="@+id/ed_capnhapTheLoai"
-                    android:hint="Thể Loại"
                     android:layout_width="match_parent"
-                    android:layout_height="wrap_content" />
+                    android:layout_height="wrap_content"
+                    android:hint="Thể Loại" />
             </LinearLayout>
 
 
         </LinearLayout>
 
-        <Button android:background="@drawable/cusstom_button_done"
+        <Button
             android:id="@+id/btn_capnhapDone"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginTop="10dp"
-            android:text="Done" />
+            android:background="@drawable/cusstom_button_done"
+            android:text="Done"
+            android:textColor="@color/tetxcolor" />
     </LinearLayout>
 
 </ScrollView>

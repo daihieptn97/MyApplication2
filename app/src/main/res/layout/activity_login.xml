@@ -67,7 +67,7 @@
                  android:inputType="textPassword"
                  android:textColorLink="@color/colorPrimary" />
 
-             <Button
+             <Button android:textColor="@color/tetxcolor"
                  android:id="@+id/btn_login_DangNhap"
                  android:layout_width="wrap_content"
                  android:layout_height="wrap_content"

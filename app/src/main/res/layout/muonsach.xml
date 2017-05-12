@@ -67,7 +67,8 @@
                 android:layout_toRightOf="@+id/img_Muon_MaDG"
                 android:hint="Mã Đọc giả" />
 
-            <Button
+            <Button android:textColor="@color/tetxcolor"
+                android:background="@drawable/cusstom_button_done"
                 android:id="@+id/btn_muon_Done"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"

@@ -67,7 +67,8 @@
             android:layout_centerHorizontal="true"
             android:layout_marginTop="35dp"
             android:background="@drawable/cusstom_button_done"
-            android:text="Done" />
+            android:text="Done"
+            android:textColor="@color/tetxcolor" />
 
         <ImageButton
             android:id="@+id/img_nhap_MaSach"

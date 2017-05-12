@@ -233,8 +233,10 @@
                     android:layout_below="@+id/ed_DG_NhapLaiMatKhau"
                     android:layout_centerHorizontal="true"
                     android:layout_marginTop="10dp"
+                    android:background="@drawable/cusstom_button_done"
                     android:foregroundGravity=""
-                    android:text="Done" />
+                    android:text="Done"
+                    android:textColor="@color/tetxcolor" />
             </RelativeLayout>
 
 

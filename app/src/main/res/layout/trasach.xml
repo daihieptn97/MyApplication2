@@ -1,8 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
     xmlns:app="http://schemas.android.com/apk/res-auto"
-    android:orientation="vertical" android:layout_width="match_parent"
-    android:layout_height="match_parent">
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical">
 
     <ImageButton
         android:id="@+id/img_Tra_MaSach"
@@ -41,18 +42,20 @@
         android:layout_alignBottom="@+id/img_Tra_MaDG"
         android:layout_alignParentEnd="true"
         android:layout_alignParentRight="true"
-        android:hint="Mã độc Giả"
+        android:layout_toEndOf="@+id/img_Tra_MaDG"
         android:layout_toRightOf="@+id/img_Tra_MaDG"
-        android:layout_toEndOf="@+id/img_Tra_MaDG" />
+        android:hint="Mã độc Giả" />
 
     <Button
         android:id="@+id/btn_Tra_Done"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:layout_marginTop="50dp"
-        android:text="Done"
         android:layout_below="@+id/auto_Tra_MaDG"
-        android:layout_centerHorizontal="true" />
+        android:layout_centerHorizontal="true"
+        android:layout_marginTop="50dp"
+        android:background="@drawable/cusstom_button_done"
+        android:text="Done"
+        android:textColor="@color/tetxcolor" />
 
 
 </RelativeLayout>

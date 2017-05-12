@@ -22,6 +22,7 @@ import com.hieptran.quanlythuvien.Login;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.NhapSach_main;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.MuonSach.MuonSach;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia.TaoDocGia;
+import com.hieptran.quanlythuvien.QuanTriVien.fragment.ThongKe;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.TraSach.TraSach;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.TongQ.ThongTin;
@@ -112,7 +113,7 @@ public class MainActivity extends AppCompatActivity
         } else if (id == R.id.menu_trasach) {
             changeFragment(new TraSach());
         } else if (id == R.id.menu_thongke) {
-
+            changeFragment(new ThongKe());
         } else if (id == R.id.nav_send) {
             Intent intentSend = new Intent();
             intentSend.setAction(Intent.ACTION_SEND);
