@@ -1,6 +1,7 @@
 package com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.DialogInterface;
 import android.content.Intent;
 import android.graphics.Bitmap;
@@ -14,6 +15,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.EditText;
 import android.widget.ImageButton;
@@ -64,6 +66,7 @@ public class TaoDocGia extends Fragment {
         lisTenDangNhap = new ArrayList<>();
         listMaDG = new ArrayList<>();
 
+        forcus();
 
         imgAvatar.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -86,13 +89,21 @@ public class TaoDocGia extends Fragment {
                 progressbar.setVisibility(View.VISIBLE);
                 tempTenDangNhap = edTenDangNhap.getText().toString().trim();
                 tempMaSV = edMaDG.getText().toString().trim();
-
+                forcus();
                 kiemTraMaDG();
             }
         });
 
 
         return view;
+    }
+
+    private void forcus() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     // convert from bitmap to byte array

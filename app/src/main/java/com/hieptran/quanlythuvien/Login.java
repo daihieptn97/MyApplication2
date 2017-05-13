@@ -1,6 +1,7 @@
 package com.hieptran.quanlythuvien;
 
 import android.Manifest;
+import android.content.Context;
 import android.content.Intent;
 import android.content.pm.PackageManager;
 import android.net.ConnectivityManager;
@@ -10,6 +11,7 @@ import android.support.annotation.NonNull;
 import android.support.v7.app.AppCompatActivity;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
 import android.widget.CheckBox;
 import android.widget.EditText;
@@ -52,6 +54,7 @@ public class Login extends AppCompatActivity {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         anhXa();
+        forcus();
         khoiChay();
         initPermission();
 
@@ -67,6 +70,7 @@ public class Login extends AppCompatActivity {
                         } else {
                             //layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
                             dangNhap(); // dang nhap cua quan tri vien
+                            forcus();
                         }
                     } else {
                         Toasty.warning(Login.this, "Bạn Hãy Nhập Đủ Thông Tin", Toast.LENGTH_SHORT).show();
@@ -82,10 +86,20 @@ public class Login extends AppCompatActivity {
 
     }
 
+    private void forcus() {
+        View view = this.getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
+    }
+
     private DatabaseReference mDatabase;
     private boolean ok = true;
 
     private void dangNhapDocGia() {
+        progressBar.show();
+        progressBar.setVisibility(View.VISIBLE);
         mDatabase = FirebaseDatabase.getInstance().getReference();
         mDatabase.child("KhoDocGia").addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
@@ -175,26 +189,20 @@ public class Login extends AppCompatActivity {
         dataBase_kiemTra = DataBase_KiemTra.getDataBase_kiemTra(this);
         dataBase_kiemTra.OpenDatabaseKiemTra();
 
-      //  try {
 
-            if (!dataBase_kiemTra.isEmpty()) {
-                KiemTra kiemTra = dataBase_kiemTra.loadTTKiemTra();
-                if (kiemTra.getDocGia() == 1) check_DocGia.setChecked(true);
-                if (kiemTra.getNhoMatKhau() == 1) check_NhoMatKhau.setChecked(true);
-                if (kiemTra.getDocGia() == 0) check_NhoMatKhau.setChecked(false);
-                if (kiemTra.getNhoMatKhau() == 0) check_DocGia.setChecked(false);
-            }
-//        }catch (Exception e){
-//
-//        }
+        if (!dataBase_kiemTra.isEmpty()) {
+            KiemTra kiemTra = dataBase_kiemTra.loadTTKiemTra();
+            if (kiemTra.getDocGia() == 1) check_DocGia.setChecked(true);
+            if (kiemTra.getNhoMatKhau() == 1) check_NhoMatKhau.setChecked(true);
+            if (kiemTra.getDocGia() == 0) check_NhoMatKhau.setChecked(false);
+            if (kiemTra.getNhoMatKhau() == 0) check_DocGia.setChecked(false);
+        }
 
         if (isInternetAvailable() && !check_DocGia.isChecked()) {
             if (ed_password.length() > 0 && ed_Email.length() > 0) {
                 progressBar.setVisibility(View.VISIBLE);
                 progressBar.show();
                 //layoutLoginContent.setBackgroundResource(R.drawable.background_mo);
-
-
                 auth.signInWithEmailAndPassword(ed_Email.getText().toString().trim(), ed_password.getText().toString().trim()).
                         addOnCompleteListener(new OnCompleteListener<AuthResult>() {
                             @Override
@@ -257,7 +265,7 @@ public class Login extends AppCompatActivity {
                             finish();
 
                         } else {
-                            Toasty.warning(Login.this, "Lỗi Đăng Nhập", Toast.LENGTH_SHORT).show();
+                            Toasty.warning(Login.this, "Sai tên đăng nhập hoặc mật khẩu", Toast.LENGTH_SHORT).show();
                             progressBar.hide();
                             layoutLoginContent.setVisibility(View.VISIBLE);
                         }

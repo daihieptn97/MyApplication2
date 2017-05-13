@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/tv_madg_TQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+
+        android:layout_alignParentStart="true"
+        android:layout_alignParentTop="true"
+        android:text="mã đọc giả" />
+
+    <TextView
+        android:id="@+id/tv_masacg_TQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Mã sách"
+        android:layout_alignParentTop="true"
+        android:layout_alignLeft="@+id/tv_ngaymuon_TQ"
+        android:layout_alignStart="@+id/tv_ngaymuon_TQ" />
+
+    <TextView
+        android:layout_marginTop="8dp"
+        android:id="@+id/textView6"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/tv_masacg_TQ"
+        android:text="ngày mượn :" />
+
+    <TextView
+        android:id="@+id/tv_ngaymuon_TQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_above="@+id/tv_ngaytra_TQ"
+        android:layout_marginTop="8dp"
+        android:layout_toEndOf="@+id/textView9"
+        android:layout_toRightOf="@+id/textView9"
+        android:text="1/01/2017" />
+
+    <TextView
+        android:id="@+id/textView9"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentLeft="true"
+        android:layout_alignParentStart="true"
+        android:layout_below="@+id/textView6"
+        android:layout_marginTop="8dp"
+        android:text="ngày hết hạn : " />
+
+    <TextView
+        android:id="@+id/tv_ngaytra_TQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignBottom="@+id/textView9"
+        android:layout_marginTop="8dp"
+        android:layout_alignBaseline="@+id/textView9"
+        android:layout_toEndOf="@+id/textView9"
+        android:layout_toRightOf="@+id/textView9"
+        android:text="1/01/2017" />
+
+    <ImageView
+        android:id="@+id/img_avatardg_TQ"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_alignParentEnd="true"
+        android:layout_alignParentRight="true"
+        android:layout_alignParentTop="true"
+        app:srcCompat="@mipmap/ic_launcher_round" />
+
+</RelativeLayout>

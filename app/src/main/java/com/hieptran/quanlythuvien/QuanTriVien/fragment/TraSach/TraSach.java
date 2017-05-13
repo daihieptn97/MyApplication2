@@ -1,6 +1,7 @@
 package com.hieptran.quanlythuvien.QuanTriVien.fragment.TraSach;
 
 import android.app.Activity;
+import android.content.Context;
 import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
@@ -9,6 +10,7 @@ import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.view.inputmethod.InputMethodManager;
 import android.widget.ArrayAdapter;
 import android.widget.AutoCompleteTextView;
 import android.widget.Button;
@@ -50,7 +52,7 @@ public class TraSach extends Fragment {
     public View onCreateView(LayoutInflater inflater, @Nullable ViewGroup container, @Nullable Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.trasach, container, false);
         AnhXa(view);
-
+        forcus();
         KiemTraTrung();
         btn_Done.setOnClickListener(new View.OnClickListener() {
             @Override
@@ -60,12 +62,11 @@ public class TraSach extends Fragment {
                     maDG = autoMaDG.getText().toString().trim();
 
                     for (int positon = 0; positon < listMaSach.size(); positon++) {
-                        //  Log.d("AAAA", listMaSach.get(positon) + " : " + (maSach));
                         if (listMaSach.get(positon).equals(maSach) && listMaDG.get(positon).equals(maDG)) {
-
                             mDone(maSach, maDG);
-                            // Toasty.warning(getContext(), "Mã này  tồn tại trong kho", Toast.LENGTH_SHORT).show();
+                            forcus();
                         } else {
+                            forcus();
                             Toasty.error(getContext(), "Mã sách hoặc mã đọc giả chưa đúng", Toast.LENGTH_SHORT).show();
                         }
                     }
@@ -88,6 +89,15 @@ public class TraSach extends Fragment {
             }
         });
         return view;
+    }
+
+
+    private void forcus() {
+        View view = getActivity().getCurrentFocus();
+        if (view != null) {
+            InputMethodManager imm = (InputMethodManager) getActivity().getSystemService(Context.INPUT_METHOD_SERVICE);
+            imm.hideSoftInputFromWindow(view.getWindowToken(), 0);
+        }
     }
 
     @Override

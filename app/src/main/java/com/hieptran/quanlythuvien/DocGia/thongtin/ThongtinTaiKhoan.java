@@ -76,6 +76,14 @@ public class ThongtinTaiKhoan extends Fragment {
                 getActivity().finish();
             }
         });
+
+
+
+        Fragment fragment = new Fragment();
+        Bundle bundle = new Bundle();
+        bundle.putString("email", mTenDangNhap());
+        fragment.setArguments(bundle);
+
         return view;
     }
 
@@ -97,7 +105,7 @@ public class ThongtinTaiKhoan extends Fragment {
         imgAvatar.setImageBitmap(StringToBitMap(docGia.getAvatar()));
     }
 
-    public Bitmap StringToBitMap(String encodedString) {
+    private Bitmap StringToBitMap(String encodedString) {
         try {
             byte[] encodeByte = Base64.decode(encodedString, Base64.DEFAULT);
             Bitmap bitmap = BitmapFactory.decodeByteArray(encodeByte, 0, encodeByte.length);

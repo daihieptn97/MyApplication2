@@ -26,7 +26,7 @@ import com.hieptran.quanlythuvien.QuanTriVien.fragment.ThongKe;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.TraSach.TraSach;
 import com.hieptran.quanlythuvien.R;
 import com.hieptran.quanlythuvien.TongQ.ThongTin;
-import com.hieptran.quanlythuvien.TongQ.TongQuan_NV;
+import com.hieptran.quanlythuvien.QuanTriVien.fragment.TongQuan.TongQuan_NV;
 
 public class MainActivity extends AppCompatActivity
         implements NavigationView.OnNavigationItemSelectedListener {

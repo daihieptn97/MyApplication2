@@ -63,8 +63,6 @@ public class TraCuuSach extends Fragment {
         return view;
     }
 
-
-
     private void upLoadData() {
         mDatabase.child(key_KhoSach).addChildEventListener(new ChildEventListener() {
             @Override
@@ -109,6 +107,9 @@ public class TraCuuSach extends Fragment {
             }
         });
     }
+
+
+
 
     private void anhXa(View view) {
         sachNhapList = new ArrayList<>();

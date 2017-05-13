@@ -5,6 +5,7 @@ import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
 import android.support.v4.widget.SwipeRefreshLayout;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -27,6 +28,8 @@ import com.hieptran.quanlythuvien.R;
 import java.util.ArrayList;
 import java.util.List;
 
+import static android.R.attr.defaultValue;
+
 /**
  * Created by hieptran on 5/7/2017.
  */
@@ -46,29 +49,31 @@ public class ThongTinMuonSachDG extends Fragment {
         return view;
     }
 
-//    private String mTenDangNhap() {
-//        Intent intent = getActivity().getIntent();
-//        String a =  intent.getStringExtra("email");
-//        return a;
-//    }
+    private String mTenDangNhap() {
+        String myInt = "";
+        Bundle bundle = this.getArguments();
+        if (bundle != null) {
+            myInt = bundle.getString("email");
+        }
+        Log.d("aaaa", myInt);
+        return myInt;
+    }
 
-    private final String tenDangNhap = "";
 
     private void loadData() {
-      //  loadDsMuon();
+          loadDsMuon();
     }
 
     private List<String> listMaSachMuon = new ArrayList<>();
 
     private void loadDsMuon() {
-
-        Query query = mDatabase.child(keyKhoSachMuon).orderByChild(keyMaDG).equalTo(tenDangNhap);
+        Query query = mDatabase.child(keyKhoSachMuon).orderByChild(keyMaDG).equalTo(mTenDangNhap());
         query.addListenerForSingleValueEvent(new ValueEventListener() {
             @Override
             public void onDataChange(DataSnapshot dataSnapshot) {
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     SachMuon muonSach = snapshot.getValue(SachMuon.class);
-                    if (tenDangNhap.equals(muonSach.getMaDocGia()) && muonSach.isHienTrangMuon()) {
+                    if (mTenDangNhap().equals(muonSach.getMaDocGia()) && muonSach.isHienTrangMuon()) {
                         listMaSachMuon.add(muonSach.getMaSach());
                     }
                 }
@@ -79,7 +84,6 @@ public class ThongTinMuonSachDG extends Fragment {
             }
         });
     }
-
 
     private void anhXa(View view) {
         mDatabase = FirebaseDatabase.getInstance().getReference();

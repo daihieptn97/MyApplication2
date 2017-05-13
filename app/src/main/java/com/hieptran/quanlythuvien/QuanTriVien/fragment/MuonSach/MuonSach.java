@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -87,7 +88,7 @@ public class MuonSach extends Fragment {
             @Override
             public void onClick(View v) {
                 tempMaSach = autoMaSach.getText().toString();
-                doneUpLoad();
+                kiemTraDieuKienMuon();
             }
         });
         return view;
@@ -95,23 +96,68 @@ public class MuonSach extends Fragment {
 
     private void doneUpLoad() {
         if (autoMaDocGia.length() > 0 && autoMaSach.length() > 0) {
-            SachMuon sachMuon = new SachMuon();
-            sachMuon.setHienTrangMuon(true);
-            sachMuon.setMaMuonSach(autoMaDocGia.getText().toString() + autoMaSach.getText().toString());
-            sachMuon.setMaDocGia(autoMaDocGia.getText().toString());
-            sachMuon.setMaSach(autoMaSach.getText().toString());
-            sachMuon.setNgayMuon(getDateMuon());
-            sachMuon.setNgayTra(getDateTra());
-            truSoLuongSach();
-            databaseReference.child(key_KhoMuonSach).push().setValue(sachMuon);
+            if (khongTontaiMaDG(autoMaDocGia.getText().toString().trim()) && khongTontaiMaSacg(autoMaSach.getText().toString().trim())) {
+                SachMuon sachMuon = new SachMuon();
+                sachMuon.setHienTrangMuon(true);
+                sachMuon.setMaMuonSach(autoMaDocGia.getText().toString() + autoMaSach.getText().toString());
+                sachMuon.setMaDocGia(autoMaDocGia.getText().toString());
+                sachMuon.setMaSach(autoMaSach.getText().toString());
+                sachMuon.setNgayMuon(getDateMuon());
+                sachMuon.setNgayTra(getDateTra());
+                truSoLuongSach();
+                databaseReference.child(key_KhoMuonSach).push().setValue(sachMuon);
 
-
-            autoMaSach.setText("");
-            autoMaDocGia.setText("");
-            Toasty.success(getContext(), "Muợn Sách thành Công", Toast.LENGTH_SHORT).show();
+                autoMaSach.setText("");
+                autoMaDocGia.setText("");
+                Toasty.success(getContext(), "Muợn Sách thành Công", Toast.LENGTH_SHORT).show();
+            }
         } else {
             Toasty.warning(getContext(), "Bạn Cần Nhập Đủ thông tin", Toast.LENGTH_SHORT).show();
         }
+    }
+
+    private boolean khongTontaiMaDG(String a) {
+        for (int i = 0; i < listMaDG.size(); i++) {
+            if (listMaDG.get(i).equals(a)) {
+                return true;
+            }
+        }
+        Toasty.error(getContext(), "Mã Đọc giả không tồn tại", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    private boolean khongTontaiMaSacg(String a) {
+        for (int i = 0; i < listMaSach.size(); i++) {
+            if (listMaSach.get(i).equals(a)) {
+                return true;
+            }
+        }
+        Toasty.error(getContext(), "Mã sách không tồn tại", Toast.LENGTH_SHORT).show();
+        return false;
+    }
+
+    private String maMuonSach = "maMuonSach";
+
+    private void kiemTraDieuKienMuon() {
+        Query query = databaseReference.child(key_KhoMuonSach).orderByChild(maMuonSach).equalTo(autoMaDocGia.getText().toString().trim() + autoMaSach.getText().toString().trim());
+        query.addListenerForSingleValueEvent(new ValueEventListener() {
+            @Override
+            public void onDataChange(DataSnapshot dataSnapshot) {
+                SachMuon sachMuon = dataSnapshot.getValue(SachMuon.class);
+//                Log.d("aaaa", dataSnapshot.getChildrenCount() + " : " + sachMuon.isHienTrangMuon());
+                if (dataSnapshot.getChildrenCount() > 0 && !sachMuon.isHienTrangMuon() != true) {
+                    Toasty.error(getContext(), "Bạn đã mượn và chưa trả sách", Toast.LENGTH_SHORT).show();
+                } else {
+                    doneUpLoad();
+
+                }
+            }
+
+            @Override
+            public void onCancelled(DatabaseError databaseError) {
+
+            }
+        });
     }
 
     private void truSoLuongSach() {
