@@ -29,7 +29,7 @@ import com.google.firebase.database.DatabaseReference;
 import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
-import com.hieptran.quanlythuvien.QuanTriVien.Scan;
+import com.hieptran.quanlythuvien.Scan.Scan;
 import com.wang.avi.AVLoadingIndicatorView;
 
 import java.io.ByteArrayOutputStream;

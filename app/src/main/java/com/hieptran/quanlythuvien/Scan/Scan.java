@@ -1,7 +1,8 @@
-package com.hieptran.quanlythuvien.QuanTriVien;
+package com.hieptran.quanlythuvien.Scan;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.os.Handler;
 import android.support.v7.app.AppCompatActivity;
 import android.widget.Toast;
 
@@ -14,25 +15,24 @@ public class Scan extends AppCompatActivity implements ZXingScannerView.ResultHa
     public static final String MA_THE = "mathe";
     private ZXingScannerView mScannerView;
 
-
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         mScannerView = new ZXingScannerView(Scan.this);
         setContentView(mScannerView);
+
         setTitle("Quét Mã");
         mScannerView.setResultHandler(Scan.this);
         mScannerView.startCamera();
-
-
     }
+
 
     @Override
     public void onUserInteraction() {
         super.onUserInteraction();
-        mScannerView.setAutoFocus(true);
-        mScannerView.setAutoFocus(false);
+        mScannerView.setFocusableInTouchMode(true);
     }
+
 
     @Override
     public void onBackPressed() {

@@ -4,7 +4,6 @@ import android.content.Intent;
 import android.os.Bundle;
 import android.support.annotation.Nullable;
 import android.support.v4.app.Fragment;
-import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -23,7 +22,7 @@ import com.google.firebase.database.FirebaseDatabase;
 import com.google.firebase.database.Query;
 import com.google.firebase.database.ValueEventListener;
 import com.hieptran.quanlythuvien.R;
-import com.hieptran.quanlythuvien.QuanTriVien.Scan;
+import com.hieptran.quanlythuvien.Scan.Scan;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.NhapSach;
 import com.hieptran.quanlythuvien.QuanTriVien.NhapSach.SachNhap;
 import com.hieptran.quanlythuvien.QuanTriVien.fragment.TaoDocGia.DocGia;
@@ -95,8 +94,8 @@ public class MuonSach extends Fragment {
     }
 
     private void doneUpLoad() {
-        if (autoMaDocGia.length() > 0 && autoMaSach.length() > 0) {
-            if (khongTontaiMaDG(autoMaDocGia.getText().toString().trim()) && khongTontaiMaSacg(autoMaSach.getText().toString().trim())) {
+        if (autoMaDocGia.length() > 0 && autoMaSach.length() > 0 ) {
+            if (khongTontaiMaDG(autoMaDocGia.getText().toString().trim()) && khongTontaiMaSacg(autoMaSach.getText().toString().trim())  && !hetSach) {
                 SachMuon sachMuon = new SachMuon();
                 sachMuon.setHienTrangMuon(true);
                 sachMuon.setMaMuonSach(autoMaDocGia.getText().toString() + autoMaSach.getText().toString());
@@ -105,11 +104,13 @@ public class MuonSach extends Fragment {
                 sachMuon.setNgayMuon(getDateMuon());
                 sachMuon.setNgayTra(getDateTra());
                 truSoLuongSach();
-                databaseReference.child(key_KhoMuonSach).push().setValue(sachMuon);
+                if (hetSach == false){
+                    databaseReference.child(key_KhoMuonSach).push().setValue(sachMuon);
+                    autoMaSach.setText("");
+                    autoMaDocGia.setText("");
+                    Toasty.success(getContext(), "Muợn Sách thành Công", Toast.LENGTH_SHORT).show();
+                }
 
-                autoMaSach.setText("");
-                autoMaDocGia.setText("");
-                Toasty.success(getContext(), "Muợn Sách thành Công", Toast.LENGTH_SHORT).show();
             }
         } else {
             Toasty.warning(getContext(), "Bạn Cần Nhập Đủ thông tin", Toast.LENGTH_SHORT).show();
@@ -160,6 +161,8 @@ public class MuonSach extends Fragment {
         });
     }
 
+    private boolean hetSach;
+
     private void truSoLuongSach() {
         Query query = databaseReference.child(key_KhoSach).orderByChild(key_MaSach).equalTo(tempMaSach);
         query.addListenerForSingleValueEvent(new ValueEventListener() {
@@ -168,8 +171,14 @@ public class MuonSach extends Fragment {
 
                 for (DataSnapshot snapshot : dataSnapshot.getChildren()) {
                     SachNhap sachNhap = snapshot.getValue(SachNhap.class);
-                    snapshot.getRef().child(soLuong).setValue(sachNhap.getSoLuong() - 1);
-
+                    if (sachNhap.getSoLuong() - 1 <= 0) {
+                        Toasty.warning(getContext(), "sách Trong kho đã hết", Toast.LENGTH_SHORT).show();
+                        hetSach = true;
+                        break;
+                    } else {
+                        snapshot.getRef().child(soLuong).setValue(sachNhap.getSoLuong() - 1);
+                        hetSach = false;
+                    }
                 }
             }
 
